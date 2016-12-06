@@ -146,6 +146,11 @@ return [
     |
     */
 
+
+    
+
+
+
     'providers' => [
 
         /*
@@ -173,6 +178,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -203,6 +209,7 @@ return [
 		App\Providers\EventServiceProvider::class,
 		App\Providers\HistoryServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
+        Codedge\Fpdf\FpdfServiceProvider::class,
     ],
 
     /*
@@ -260,5 +267,9 @@ return [
 		'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
 		'Html'        => Collective\Html\HtmlFacade::class,
 		'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
+        'Fpdf' => Codedge\Fpdf\Facades\Fpdf::class,
+        
+        
+
     ],
 ];

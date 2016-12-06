@@ -64,7 +64,7 @@
                                 <div class="col-xs-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4>Item</h4>
+                                            <h4>Welcome to "KoolTech Electricals" Smart Inventory System</h4>
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
@@ -78,7 +78,8 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4>Item</h4>
+                                            
+                                            <a href="invoices" class="btn btn-block btn-primary"><h4>Invoices <span class="glyphicon glyphicon-list"></span></h4></a>
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
@@ -90,7 +91,7 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4>Item</h4>
+                                            <a href="invoices" class="btn btn-block btn-primary"><h4>Stocks <span class="glyphicon glyphicon-tower"></span></h4></a>
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
@@ -102,7 +103,7 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4>Item</h4>
+                                            <a href="invoices" class="btn btn-block btn-primary"><h4>Products <i class="fa fa-product-hunt"></i></h4></a>
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
@@ -114,7 +115,7 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h4>Item</h4>
+                                           <a href="newcustomer" class="btn btn-block btn-primary"><h4>Customers <i class="fa fa-users"></i></h4></a>
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
@@ -122,6 +123,32 @@
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
+                                
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                           <a href="invoices" class="btn btn-block btn-primary"><h4>Sellers <i class="fa fa-product-hunt"></i></h4></a>
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
+                                        </div><!--panel-body-->
+                                    </div><!--panel-->
+                                </div><!--col-md-6-->
+                                
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                           <a href="invoices" class="btn btn-block btn-primary"><h4>Products <i class="fa fa-product-hunt"></i></h4></a>
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
+                                        </div><!--panel-body-->
+                                    </div><!--panel-->
+                                </div><!--col-md-6-->
+                                
+                                
 
                             </div><!--row-->
 
