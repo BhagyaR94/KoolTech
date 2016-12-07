@@ -1,17 +1,41 @@
-<script>
-    $(function()
-    {
-        $( "#q" ).autocomplete({
-            source: "search/autocomplete",
-            minLength: 3,
-            select: function(event, ui) {
-                $('#q').val(ui.item.value);
-            }
-        });
-    });
-</script>
+@extends('backend.layouts.app')
 
-{{ Form::open(['action' => ['SearchController@searchUser'], 'method' => 'GET']) }}
-{{ Form::text('q', '', ['id' =>  'q', 'placeholder' =>  'Enter name'])}}
-{{ Form::submit('Search', array('class' => 'button expand')) }}
-{{ Form::close() }}
+@section('content')
+{!! Form::open(['class'=>'form-horizontal','url'=>'searchcustomer'])!!}
+    
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading">Please Select an Invoice Number to Save</div>
+            <div class="panel-body">
+                
+                
+                
+                <div class="col-md-12">
+                <div class="form-group">
+
+                        {!! Form::label ('invoiceno_lbl','Select Customer:',['class' =>'control-label col-md-3']) !!}
+
+                        <div class="col-md-6">
+                            <select  name="cid" class="form-control">
+                                @foreach($customers as $customer)
+                                    <option value={{$customer->Cus_Code}}>{{$customer->Cus_Code}} - {{$customer->Cus_Name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-3"><button class="btn btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-search"> </span> Search</button>
+                 </div>
+                    </div>
+            </div>
+                                
+                    
+               
+            </div>
+            <div class="panel-footer">
+
+            </div>
+        </div>
+
+    {!! Form::close() !!}
+    
+@stop

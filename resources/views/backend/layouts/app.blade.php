@@ -66,6 +66,7 @@
                 <!-- Main content -->
                 <section class="content">
                     @include('includes.partials.messages')
+                    
                     @yield('content')
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->

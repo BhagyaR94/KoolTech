@@ -4,7 +4,7 @@ namespace App\Http\Requests\Frontend\Customers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddCustomer extends FormRequest
+class UpdateCustomer extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,11 @@ class AddCustomer extends FormRequest
     public function rules()
     {
         return [
-            'CustomerCode'=>'required|min:3',
             'CustomerName'=>'required',
             'CustomerNIC'=>'required|min:10',
             'Address1'=>'required|min:3',
             'CreditLimit'=>'required|min:1',
             'SalesAmount'=>'required|min:1',
-            
         ];
     }
 }

@@ -78,12 +78,11 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            
+                                            <h3>Invoices <span class="glyphicon glyphicon-list pull-right"></span></h3>
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
                                             <a href="invoices" class="btn btn-block btn-primary"><h4>Invoices <span class="glyphicon glyphicon-list"></span></h4></a>
-                                        </div><!--panel-heading-->
-
-                                        <div class="panel-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
@@ -91,11 +90,13 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
+                                            
+                                            <h3>Stocks <span class="glyphicon glyphicon-tower pull-right"></span></h3>
+                                            
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
                                             <a href="invoices" class="btn btn-block btn-primary"><h4>Stocks <span class="glyphicon glyphicon-tower"></span></h4></a>
-                                        </div><!--panel-heading-->
-
-                                        <div class="panel-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
@@ -103,11 +104,12 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
+                                            <h3>Products <span class="glyphicon glyphicon-list pull-right"></span></h3>
+                                            
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
                                             <a href="invoices" class="btn btn-block btn-primary"><h4>Products <i class="fa fa-product-hunt"></i></h4></a>
-                                        </div><!--panel-heading-->
-
-                                        <div class="panel-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
@@ -115,11 +117,14 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                           <a href="newcustomer" class="btn btn-block btn-primary"><h4>Customers <i class="fa fa-users"></i></h4></a>
+                                            <h3>Customers <i class="fa fa-users pull-right"></i></h3>
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
+                                            <a href="newcustomer" class="btn btn-block btn-success"><h4>Add Customers <i class="fa fa-users"></i></h4></a>
+                                            <a href="updatecustomer" class="btn btn-block btn-primary"><h4>Update Customers <i class="fa fa-edit"></i></h4></a>
+                                            <a href="newcustomer" class="btn btn-block btn-danger"><h4>Delete Customers <i class="fa fa-trash"></i></h4></a>
+                                            
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
@@ -127,11 +132,12 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
+                                           
+                                            <h3>Sellers <i class="fa fa-product-hunt pull-right"></i></h3>
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
                                            <a href="invoices" class="btn btn-block btn-primary"><h4>Sellers <i class="fa fa-product-hunt"></i></h4></a>
-                                        </div><!--panel-heading-->
-
-                                        <div class="panel-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
@@ -139,11 +145,12 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                           <a href="invoices" class="btn btn-block btn-primary"><h4>Products <i class="fa fa-product-hunt"></i></h4></a>
+                                            <h3>Products <i class="fa fa-product-hunt pull-right"></i></h3>
+                                           
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non qui facilis deleniti expedita fuga ipsum numquam aperiam itaque cum maxime.</p>
+                                            <a href="invoices" class="btn btn-block btn-primary"><h4>Products <i class="fa fa-product-hunt"></i></h4></a>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
@@ -163,4 +170,6 @@
         </div><!-- col-md-10 -->
 
     </div><!-- row -->
+    
+    
 @endsection

@@ -9,18 +9,29 @@
 Route::get('/', 'FrontendController@index')->name('index');
 Route::get('macros', 'FrontendController@macros')->name('macros');
 
-
+//begin of invoice routes
 Route::get('invoices', 'Invoices\InvoiceController@invoices');
-
-Route::get('newcustomer', 'Customers\CustomerController@addcustomer');
-
-Route::post('addnewcustomer', 'Customers\CustomerController@addnewcustomer');
 
 Route::post('modifyinvoice','Invoices\InvoiceController@feed_records');
 
 Route::post('clearinvoice','Invoices\InvoiceController@drop_records');
 
 Route::get('saveinvoice/{invoiceid}','Invoices\InvoiceController@save_records');
+//end of invoice routes
+
+//begin of customer routes
+Route::get('newcustomer', 'Customers\CustomerController@customer');
+
+Route::post('addnewcustomer', 'Customers\CustomerController@addnewcustomer');
+
+Route::get('updatecustomer','Customers\CustomerController@pickcustomer');
+
+Route::post('searchcustomer','Customers\CustomerController@searchcustomer');
+
+Route::post('modifycustomer','Customers\CustomerController@updatecustomer');
+
+
+//end of customer routes
 
 /**
  * These frontend controllers require the user to be logged in
