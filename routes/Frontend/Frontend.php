@@ -20,15 +20,21 @@ Route::get('saveinvoice/{invoiceid}','Invoices\InvoiceController@save_records');
 //end of invoice routes
 
 //begin of customer routes
+Route::get('searchcustomer/{customercode}','Customers\CustomerController@search_customer');
+
 Route::get('newcustomer', 'Customers\CustomerController@customer');
 
 Route::post('addnewcustomer', 'Customers\CustomerController@addnewcustomer');
 
 Route::get('updatecustomer','Customers\CustomerController@pickcustomer');
 
-Route::post('searchcustomer','Customers\CustomerController@searchcustomer');
+Route::post('upcustomer','Customers\CustomerController@updatecustomer');
 
-Route::post('modifycustomer','Customers\CustomerController@updatecustomer');
+
+
+
+
+
 
 
 //end of customer routes

@@ -58,11 +58,10 @@ class CustomerController extends Controller
         return view('Frontend/InterfacesKT/SearchResult',['customers'=>$customers]);
     }
     
-    public function searchcustomer()
+    public function search_customer($customercode)
    {   
        $customers = DB::table('tblm_customer')->select('Cus_Code','Cus_Name')->get();
-       $cus=\Illuminate\Support\Facades\Request::only('cid');
-       $record=DB::table('tblm_customer')->where('Cus_Code',$cus)->first();
+       $record=DB::table('tblm_customer')->where('Cus_Code',$customercode)->first();
        return view('Frontend/InterfacesKT/UpdateCustomer',['customers'=>$customers,'record'=>$record]); 
    }
     
@@ -70,8 +69,7 @@ class CustomerController extends Controller
     public function updatecustomer(Customers\UpdateCustomer $request)
     {
         
-        return 'helloooooos';
-           /* try
+        try
             {
             $credit=$request->Credit;
             $active=$request->Active;
@@ -98,6 +96,6 @@ class CustomerController extends Controller
             catch (Exception $ex) 
             {
                     return $ex;
-            }*/
+            }
     }
 }

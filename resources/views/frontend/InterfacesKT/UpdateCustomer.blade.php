@@ -2,13 +2,7 @@
 
 @section('content')
 
-<script type="text/javascript">
-    $(window).load(function(){
-        $('.bs-example-modal-lg').modal('show');
-    });
-</script>
-
-    {!! Form::open(['class'=>'form-horizontal','url'=>'modifycustomer'])!!}
+    {!! Form::open(['class'=>'form-horizontal','url'=>'upcustomer'])!!}
     <div class="box box-primary">
         <div class="box-header with-border">
 
@@ -172,9 +166,5 @@
         <div class="box-footer"></div>
     </div>
     {!! Form::close() !!}
-    
-    
-    
-    
     
     @stop

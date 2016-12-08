@@ -1,11 +1,22 @@
 @extends('backend.layouts.app')
 
 @section('content')
-{!! Form::open(['class'=>'form-horizontal','url'=>'searchcustomer'])!!}
+
+<script type="text/javascript">
+    function selecttosearch(e1)
+    {
+        var inid=document.getElementById(e1);
+        var val=inid.options[inid.selectedIndex].value;
+        window.location=val;
+    }
+    </script>
+
+
+
     
         
         <div class="panel panel-primary">
-            <div class="panel-heading">Please Select an Invoice Number to Save</div>
+            <div class="panel-heading">Please Select Customer You Want to Update</div>
             <div class="panel-body">
                 
                 
@@ -16,14 +27,17 @@
                         {!! Form::label ('invoiceno_lbl','Select Customer:',['class' =>'control-label col-md-3']) !!}
 
                         <div class="col-md-6">
-                            <select  name="cid" class="form-control">
+                            <select class="form-control"  id="cusid" >
                                 @foreach($customers as $customer)
-                                    <option value={{$customer->Cus_Code}}>{{$customer->Cus_Code}} - {{$customer->Cus_Name}}</option>
+                                <option>{{$url = action('Frontend\Customers\CustomerController@search_customer',['customercode' => $customer->Cus_Code]) }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class="col-md-3"><button class="btn btn-primary btn-block" type="submit"><span class="glyphicon glyphicon-search"> </span> Search</button>
+                        <div class="col-md-3">
+                            
+                            <button onclick="selecttosearch('cusid')" class="btn btn-lg btn-success">Select Invoice</button>
+                            
                  </div>
                     </div>
             </div>
@@ -36,6 +50,4 @@
             </div>
         </div>
 
-    {!! Form::close() !!}
-    
 @stop
