@@ -48,11 +48,7 @@ class InvoiceController extends Controller
     /**
      *
      */
-    public function index()
-    {
-
-    }
-
+    
     /**
      * @param Requests\AddInvoice $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector

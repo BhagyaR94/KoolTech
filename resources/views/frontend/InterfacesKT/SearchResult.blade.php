@@ -36,7 +36,7 @@
 
                         <div class="col-md-3">
                             
-                            <button onclick="selecttosearch('cusid')" class="btn btn-lg btn-success">Select Invoice</button>
+                            <button onclick="selecttosearch('cusid')" class="btn btn-lg btn-info">Update Customer</button>
                             
                  </div>
                     </div>

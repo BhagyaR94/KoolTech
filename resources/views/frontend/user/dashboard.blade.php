@@ -82,7 +82,9 @@
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
-                                            <a href="invoices" class="btn btn-block btn-primary"><h4>Invoices <span class="glyphicon glyphicon-list"></span></h4></a>
+                                            <a href="invoices" class="btn btn-block btn-success"><h4>Add New Invoice <span class="glyphicon glyphicon-list"></span></h4></a>
+                                            <a href="invoices" class="btn btn-block btn-warning"><h4>Cancel Added Invoice <span class="glyphicon glyphicon-pause"></span></h4></a>
+                                            <a href="invoices" class="btn btn-block btn-danger"><h4>Delete Added Invoice <span class="glyphicon glyphicon-trash"></span></h4></a>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
@@ -104,7 +106,7 @@
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3>Products <span class="glyphicon glyphicon-list pull-right"></span></h3>
+                                            <h3>Products <i class="fa fa-product-hunt pull-right"></i></span></h3>
                                             
                                         </div><!--panel-heading-->
 
@@ -121,8 +123,8 @@
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
-                                            <a href="newcustomer" class="btn btn-block btn-success"><h4>Add Customers <i class="fa fa-users"></i></h4></a>
-                                            <a href="updatecustomer" class="btn btn-block btn-primary"><h4>Update Customers <i class="fa fa-edit"></i></h4></a>
+                                            <a href="newcustomer" class="btn btn-block btn-success"><h4>Add New Customer <i class="fa fa-users"></i></h4></a>
+                                            <a href="updatecustomer" class="btn btn-block btn-primary"><h4>Update Customer <i class="fa fa-edit"></i></h4></a>
                                             <a href="newcustomer" class="btn btn-block btn-danger"><h4>Delete Customers <i class="fa fa-trash"></i></h4></a>
                                             
                                         </div><!--panel-body-->
@@ -133,7 +135,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                            
-                                            <h3>Sellers <i class="fa fa-product-hunt pull-right"></i></h3>
+                                            <h3>Sellers <i class="fa fa-users pull-right"></i></h3>
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
@@ -142,20 +144,20 @@
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
                                 
+                                
+                                
                                 <div class="col-md-6">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3>Products <i class="fa fa-product-hunt pull-right"></i></h3>
+                                            <h3>Quotations <i class="fa fa-book pull-right"></i></h3>
                                            
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
-                                            <a href="invoices" class="btn btn-block btn-primary"><h4>Products <i class="fa fa-product-hunt"></i></h4></a>
+                                            <a href="newquotation" class="btn btn-block btn-primary"><h4>New Quotation <i class="fa fa-book"></i></h4></a>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
-                                
-                                
 
                             </div><!--row-->
 

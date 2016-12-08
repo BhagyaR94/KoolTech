@@ -29,7 +29,15 @@ Route::post('addnewcustomer', 'Customers\CustomerController@addnewcustomer');
 Route::get('updatecustomer','Customers\CustomerController@pickcustomer');
 
 Route::post('upcustomer','Customers\CustomerController@updatecustomer');
+//end of customer routes
 
+//begin of quotation routes
+Route::get('newquotation', 'Quotations\QuotationController@newquotation');
+
+Route::post('addquotation', 'Quotations\QuotationController@addquotation');
+
+Route::post('clearqt','Quotations\QuotationController@dropqtitem');
+//end of quotation routes
 
 
 
