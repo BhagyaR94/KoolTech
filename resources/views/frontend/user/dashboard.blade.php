@@ -158,6 +158,20 @@
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->
+                                
+                                
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3>Receipts <i class="fa fa-book pull-right"></i></h3>
+                                           
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
+                                            <a href="newquotation" class="btn btn-block btn-primary"><h4>Print Invoice <i class="fa fa-book"></i></h4></a>
+                                        </div><!--panel-body-->
+                                    </div><!--panel-->
+                                </div><!--col-md-6-->
 
                             </div><!--row-->
 

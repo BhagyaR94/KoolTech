@@ -39,13 +39,11 @@ Route::post('addquotation', 'Quotations\QuotationController@addquotation');
 Route::post('clearqt','Quotations\QuotationController@dropqtitem');
 //end of quotation routes
 
+//begin of receipt routes
+Route::get('newreceipt', 'Receipts\ReceiptController@newreceipt');
 
-
-
-
-
-
-//end of customer routes
+Route::post('savereceipt','Receipts\ReceiptController@savereceipt');
+//end of receipt routes
 
 /**
  * These frontend controllers require the user to be logged in
