@@ -168,7 +168,20 @@
                                         </div><!--panel-heading-->
 
                                         <div class="panel-body">
-                                            <a href="newquotation" class="btn btn-block btn-primary"><h4>Print Invoice <i class="fa fa-book"></i></h4></a>
+                                            <a href="newreceipt" class="btn btn-block btn-primary"><h4>New Receipt <i class="fa fa-book"></i></h4></a>
+                                        </div><!--panel-body-->
+                                    </div><!--panel-->
+                                </div><!--col-md-6-->
+                                
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3>Returned Cheques <i class="fa fa-dollar pull-right"></i></h3>
+                                           
+                                        </div><!--panel-heading-->
+
+                                        <div class="panel-body">
+                                            <a href="returnedcheques" class="btn btn-block btn-primary"><h4>Report Returned Cheque <i class="fa fa-book"></i></h4></a>
                                         </div><!--panel-body-->
                                     </div><!--panel-->
                                 </div><!--col-md-6-->

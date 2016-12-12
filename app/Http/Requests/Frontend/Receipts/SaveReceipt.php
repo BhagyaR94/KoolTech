@@ -23,6 +23,8 @@ class SaveReceipt extends FormRequest
      */
     public function rules()
     {
+        
+        
         return [
             'ReceiptNo'=>'required|min:8',
             'CustomerID'=>'required',

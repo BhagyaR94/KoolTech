@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Frontend\Invoices;
+namespace App\Http\Requests\Frontend\ReturnedCheques;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddInvoice extends FormRequest
+class ReportCheque extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,13 @@ class AddInvoice extends FormRequest
     public function rules()
     {
         return [
-
-            'invoiceid'=>'required',
-            'cid'=>'required',
-            'products'=>'required',
-            'qty'=>'required|integer|min:1',
-            'dis_per'=>'required|min:1'
+            'Type'=>'required',
+            'ReportNo'=>'required',
+            'Customer'=>'required',
+            'Amount'=>'required',
+            'Bank'=>'required',
+            'Cheque_No'=>'required',
+            
         ];
     }
 }

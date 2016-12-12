@@ -4,7 +4,7 @@ namespace App\Http\Requests\Frontend\Invoices;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddInvoice extends FormRequest
+class SaveInvoice extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,12 @@ class AddInvoice extends FormRequest
     public function rules()
     {
         return [
-
-            'invoiceid'=>'required',
-            'cid'=>'required',
-            'products'=>'required',
-            'qty'=>'required|integer|min:1',
-            'dis_per'=>'required|min:1'
+            'InvoiceNo'=>'required',
+            'PayType'=>'required',
+            'Amount'=>'required',
+            
+                    
+            
         ];
     }
 }

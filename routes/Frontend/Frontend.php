@@ -16,7 +16,7 @@ Route::post('modifyinvoice','Invoices\InvoiceController@feed_records');
 
 Route::post('clearinvoice','Invoices\InvoiceController@drop_records');
 
-Route::get('saveinvoice/{invoiceid}','Invoices\InvoiceController@save_records');
+Route::post('saveinvoice','Invoices\InvoiceController@save_records');
 //end of invoice routes
 
 //begin of customer routes
@@ -42,13 +42,28 @@ Route::post('clearqt','Quotations\QuotationController@dropqtitem');
 //begin of receipt routes
 Route::get('newreceipt', 'Receipts\ReceiptController@newreceipt');
 
+Route::get('getajax/{code}', 'Receipts\ReceiptController@getajax');
+
 Route::post('savereceipt','Receipts\ReceiptController@savereceipt');
 //end of receipt routes
+
+
+//begin of returnedcheques routes
+
+
+Route::get('returnedcheques','ReturnedCheques\ReturnedChequesController@returnedcheques');
+
+Route::get('returnedchequedetails/{code}','ReturnedCheques\ReturnedChequesController@getreturnedcheqedetails');
+
+Route::post('reportchequesave','ReturnedCheques\ReturnedChequesController@reportchequesave');
+
+//end of returnedcheques routes
 
 /**
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'
  */
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::group(['namespace' => 'User', 'as' => 'user.'], function() {
 		/**

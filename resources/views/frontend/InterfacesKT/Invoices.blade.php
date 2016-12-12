@@ -111,7 +111,7 @@
 
                         {!! Form::label ('invoiceno_lbl','Invoice No.:',['class' =>'control-label col-md-3']) !!}
 
-                        {!! Form::number ('invoiceid','',['class'=>'form-control col-md-7', 'placeholder'=>'Invoice Number']) !!}
+                        {!! Form::number ('invoiceid',$invoice_detail->Inv_No,['class'=>'form-control col-md-7', 'placeholder'=>'Invoice Number']) !!}
 
                     </div>
 
@@ -125,6 +125,8 @@
                                     <option value={{$customer->Cus_Code}}>{{$customer->Cus_Code}} - {{$customer->Cus_Name}}</option>
                                 @endforeach
                             </select>
+                            
+                            
                         </div>
 
                     </div>
@@ -197,6 +199,7 @@
                 <td>Product</td>
                 <td>Description</td>
                 <td>Invoice No.</td>
+                <td>Customer</td>
                 <td>Qty</td>
                 <td>Unit Price</td>
                 <td>Dis %</td>
@@ -206,12 +209,16 @@
                 </thead>
 
             {!! Form::open(['class'=>'form', 'url'=>'clearinvoice' , 'method'=>'post']) !!}
+            
         @foreach($temp_inv as $temp_invs)
+            
                     <tr>   
                     <input type="hidden" name="product_id" value="{{$temp_invs->Product_ID}}" />
+                    
                     <td>{{$temp_invs->Product_ID}}</td>
                     <td>{!!$temp_invs->Product_Desc!!}</td>
                     <td>{{$temp_invs->Invoice_No}}</td>
+                    <td>{{$temp_invs->Customer_ID}}</td>
                     <td>{{$temp_invs->Qty}}</td>
                     <td>{{$temp_invs->Price}}</td>
                     <td>{{$temp_invs->Dis_Per}}</td>
@@ -416,22 +423,96 @@
     <div class="modal-content">
         
         <div class="panel panel-primary">
-            <div class="panel-heading">Please Select an Invoice Number to Save</div>
+            <div class="panel-heading"><h4><center>Please Select an Invoice Number to Proceed</center></h4></div>
             <div class="panel-body">
                 
+                {!! Form::open(['class'=>'form','url'=>'saveinvoice'])!!}
                 
-                
-                <select class="form-control" id="saves">
+                <div class="form-group">
+                {!! Form::label ('invoiceno_lbl','Please Select An Invoice:',['class' =>'control-label col-md-3']) !!}
+                <div class="col-md-9">
+                    <select class="form-control" name="InvoiceNo" id="saves">
                     @foreach($temp_inv as $temp_invs)
-                                <option>{{$url = action('Frontend\Invoices\InvoiceController@save_records',['invoiceid' => $temp_invs->Invoice_No]) }}</option>
+                    <option value="{{$temp_invs->Invoice_No}}">Invoice No: {{$temp_invs->Invoice_No}} | Customer Code- {{$temp_invs->Customer_ID}}</option>
                     @endforeach
-                </select>
-                                
+                    </select>
+                    <hr>
+                </div>
+                
+                </div>
+                <script>
+                function disablefunction()
+                {
+                    document.getElementById("bank").disabled=true;
+                    
+                    document.getElementById("chqno").disabled=true;
+                }
+                
+                function enablefunction()
+                {
+                    document.getElementById("bank").disabled=false;
+                    
+                    document.getElementById("chqno").disabled=false;
+                }
+                </script>
+                
+                
+                <div class="row-fluid">
+                    <div class="col-md-4">
+                    
+                    <div class="form-inline"   style="border-radius:5px; border-style: groove">
+                        <h4>Payment Type</h4>
+                <div class="form-group">
+                {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-5']) !!}
+                <div class="col-md-7">
+                    {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onclick'=>'disablefunction()'])!!}
+                </div>
+            </div>
+                
+                <div class="form-group">
+                 {!! Form::label ('invoiceno_lbl','Cheque:',['class' =>'control-label col-md-6']) !!}
+                <div class="col-md-6">
+                    {!!Form::radio('PayType', 'CH', false,['class'=>'radio','onclick'=>'enablefunction()'])!!}
+                </div>
+            </div>
+                
+            </div>
+                </div>
+                
+                
+            </div>
+                
+                <div class="col-md-8 form-horizontal">
+                            
+                            <div class="form-group-sm">
+                                {!! Form::label ('ctel','Amount:',['class' =>'control-label col-md-3']) !!}
+                                    <div class="col-md-9">
+                                {!! Form::text ('Amount','',['class'=>'form-control', 'placeholder'=>'Cash Given']) !!}
+                                    </div>
+                            </div>
+                    
+                            <div class="form-group-sm">
+                                {!! Form::label ('ctel','Cheque No.:',['class' =>'control-label col-md-3']) !!}
+                                    <div class="col-md-9">
+                                {!! Form::text ('ChequeNo','',['class'=>'form-control', 'placeholder'=>'Cash Given', 'id'=>'chqno']) !!}
+                                    </div>
+                            </div>
+                    
+                            <div class="form-group-sm">
+                                {!! Form::label ('ctel','Bank:',['class' =>'control-label col-md-3']) !!}
+                                    <div class="col-md-9">
+                                {!! Form::text ('Bank','',['class'=>'form-control', 'placeholder'=>'Cash Given','id'=>'bank']) !!}
+                                    </div>
+                            </div>
+                </div>
+                
                     
                
             </div>
             <div class="panel-footer">
-                 <button onclick="selecttosave('saves')" class="btn btn-lg btn-success">Select Invoice</button>
+                {!! Form::button('<span class="glyphicon glyphicon-floppy-disk"></span>  Save Invoice',array('class'=>'btn btn-lg btn-success','type'=>'submit')) !!}
+                {!! Form::button('<span class="glyphicon glyphicon-erase"></span>  Clear Fields',array('class'=>'btn btn-lg btn-warning','type'=>'reset')) !!}
+                {!! Form::close() !!}
                  
             </div>
         </div>
@@ -439,6 +520,38 @@
     </div>
   </div>
 </div>
+    
+    
+    <script>
+function showHint(str) {
+    if (str.length == 0) { 
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() 
+        {
+            if (this.readyState == 4 && this.status == 200) 
+            {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "getajax/"+str, true);
+        xmlhttp.send();
+    }
+}
+</script>
+</head>
+<body>
+
+<p><b>Start typing a name in the input field below:</b></p>
+<form> 
+First name: <input type="text" onkeyup="showHint(this.value)">
+</form>
+
+<select>
+    <option id="txtHint"></option>
+</select>
 
     <!-- Cancel Invoice Ends Here-->
 

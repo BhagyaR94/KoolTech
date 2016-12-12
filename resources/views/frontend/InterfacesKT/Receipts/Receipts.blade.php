@@ -9,10 +9,10 @@
             return p1;
         }
     </script>
-
-
+    
     <div class="row-fluid">
         <h2>Receipts</h2>
+        
     </div>
 
 
@@ -39,8 +39,6 @@
                     <li>{!! Form::button('<span class="glyphicon glyphicon-refresh"> Reset</span>',array('class'=>'btn btn-lg btn-warning','type'=>'reset','name'=>'reset')) !!}</li>
                     <li>{!! Form::button('<span class="glyphicon glyphicon-print"> Print</span>',array('class'=>'btn btn-lg btn-primary','type'=>'submit','name'=>'print')) !!}</li>
                     <li>{!! Form::button('<span class="glyphicon glyphicon-trash"> Delete</span>',array('class'=>'btn btn-lg btn-danger ','type'=>'submit','name'=>'delete')) !!}</li>
-
-
                 </ul>
             </div>
 
@@ -257,5 +255,11 @@
 </div>
 
     <!-- Cancel Invoice Ends Here-->
+    
+    
+    
+    
+    
+    
 
     @stop

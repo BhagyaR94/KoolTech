@@ -29,19 +29,21 @@ class ReceiptController extends Controller
         
         $paytype=$request->PayType;
         
+        $customername = DB::table('tblm_customer')->where('Cus_Code',$request->CustomerID)->value('Cus_Name');
+        
         if($paytype=="CH")
         {
-            
-            $fpdf->AddPage('P','A4',0);
+            $fpdf=new FPDF('L','mm',array(210,154));
+            $fpdf->AddPage();
             $fpdf->SetRightMargin(5);
             $fpdf->SetLeftMargin(5);
-            $fpdf->SetFont('Courier', 'B', 24);
+            $fpdf->SetFont('Courier', 'B', 28);
             $fpdf->Cell(190,10,'KOOLTECH ELECTRICALS',0,0,'C');
-            $fpdf->Ln(5);
-            $fpdf->SetFont('Courier', 'B', 10);
+            $fpdf->Ln(6);
+            $fpdf->SetFont('Courier', 'B', 15);
             $fpdf->Cell(190,10,'No.18 B, Cross Street, Kandy',0,0,'C');
-            $fpdf->Ln(5);
-            $fpdf->SetFont('Courier', 'B', 10);
+            $fpdf->Ln(6);
+            $fpdf->SetFont('Courier', 'B', 15);
             $fpdf->Cell(190,10,'Tel/Fax:081-2228666,Tel:077-3949282',0,0,'C');
             
             //Receipt Type Name
@@ -50,7 +52,7 @@ class ReceiptController extends Controller
             $fpdf->Cell(190,10,'Receipt',0,0,'C');
             
             //end Receipt Type Name
-            $fpdf->Line(0,35,210,35);
+            $fpdf->Line(0,38,210,38);
 
             //receipt body start
             $fpdf->Ln(10);
@@ -58,33 +60,29 @@ class ReceiptController extends Controller
             $fpdf->Cell(100,10,'Receipt No: '.$request->ReceiptNo,0,0,'L');
             $fpdf->Cell(100,10,'Payment Type: '.$request->PayType,0,1,'R');
             $fpdf->Cell(100,10,'Receipt Purpose: '.$request->RecType,0,0,'L');
-            $fpdf->Cell(100,10,'Customer: '.$request->CustomerID,0,0,'R');
-            $fpdf->Line(0,55,210,55);
+            $fpdf->Cell(100,10,'Customer: '.$request->CustomerID.' - '.$customername,0,0,'R');
+            
             $fpdf->Ln(10);
-            $fpdf->Cell(80,10,'Account No: '.$request->AccountNo,0,0,'L');
             $fpdf->Cell(80,10,'Cheque No: '.$request->ChequeNo,0,0,'L');
-            $fpdf->Cell(30,10,'Bank: '.$request->Bank,0,1,'L');
+            //$fpdf->Cell(80,10,'Cheque No: '.$request->ChequeNo,0,0,'L');
+            $fpdf->Cell(120,10,'Bank: '.$request->Bank,0,1,'R');
             $fpdf->Cell(90,10,'Realized Date: '.$request->RealizeDate,0,0,'L');
             $fpdf->SetFont('Courier', 'B', 18);
             $fpdf->Cell(100,10,'Amount: Rs.'.$request->Amount.'/-',0,1,'R');
+            $fpdf->Ln(10);
             $fpdf->SetFont('Courier', 'B', 14);
             $fpdf->Cell(200,10,'Remarks: '.$request->Remarks,0,0,'L');
             
             //receipt body end
             
             //footer start
-            $fpdf->Line(0,75,210,75);
-            $fpdf->Ln(15);
-            $fpdf->SetFont('Courier', 'B', 10);
-            $fpdf->Cell(200,5,''. \Carbon\Carbon::now('Asia/Colombo'),0,1,'C');
-            $fpdf->Cell(200,5,'Received With Thanks From - KOOLTECH ELECTRICALS -',0,1,'C');
-            $fpdf->Cell(200,5,'No.18 B, Cross Street, Kandy',0,1,'C');
-            $fpdf->Cell(200,5,'Tel/Fax:081-2228666,Tel:077-3949282',0,1,'C');
+            
             
             
             //footer end
             
             //generate receipt pdf
+            //$fpdf->Output('Invoice.pdf','D');
             $fpdf->Output('Invoice.pdf','I');
             
             return response('Hello World', 200)
@@ -98,4 +96,12 @@ class ReceiptController extends Controller
         
     
     }
+    
+    public function getajax($code) {
+        
+        $customers = DB::table('tblm_customer')->where('Cus_Name','LIKE','%'.$code.'%')->pluck('Cus_Code');
+        return $customers;
+    }
+    
+    
 }
