@@ -134,7 +134,7 @@ class InvoiceController extends Controller {
         
         if($inv_det==1)
             {
-                DB::table('tbl_new_temporary_invoice')->where('temp_id', '=', $tempid)->delete();
+                DB::table('tbl_new_temporary_invoice')->where('Invoice_No', '=', $invoiceid)->delete();
               
             }
           
