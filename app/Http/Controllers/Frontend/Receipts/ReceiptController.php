@@ -99,8 +99,7 @@ class ReceiptController extends Controller
     
     public function getajax($code) {
         
-        $customers = DB::table('tblm_customer')->where('Cus_Name','LIKE','%'.$code.'%')->pluck('Cus_Code');
-        return $customers;
+        
     }
     
     

@@ -26,7 +26,6 @@ class AddInvoice extends FormRequest
         return [
 
             'invoiceid'=>'required',
-            'cid'=>'required',
             'products'=>'required',
             'qty'=>'required|integer|min:1',
             'dis_per'=>'required|min:1'

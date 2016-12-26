@@ -24,7 +24,9 @@ class DropInvoice extends FormRequest
     public function rules()
     {
         return [
-            'product_id'=>'required'
+            'temp_id'=>'required',
+            'product_id'=>'required',
+            'qty'=>'required'
         ];
     }
 }

@@ -30,10 +30,10 @@ class SaveReceipt extends FormRequest
             'CustomerID'=>'required',
             'PayType'=>'required',
             'RecType'=>'required',
-            'Bank'=>'required',
-            'AccountNo'=>'required',
-            'ChequeNo'=>'required',
-            'RealizeDate'=>'required',
+            'Bank'=>'required_if:PayType,CH',
+            'AccountNo'=>'required_if:PayType,CH',
+            'ChequeNo'=>'required_if:PayType,CH',
+            'RealizeDate'=>'required_if:PayType,CH',
             'Amount'=>'required'
         ];
     }
