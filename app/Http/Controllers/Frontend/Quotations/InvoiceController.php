@@ -55,9 +55,7 @@ class InvoiceController extends Controller {
 
         if (isset($_POST['Add'])) {
             $request->only(['invoiceid', 'cid', 'poroducts', 'qty']);
-            $inid=$request->input('invoiceid');
-            
-            $id = str_pad($inid, 7,'0',STR_PAD_LEFT);
+            $id = $request->input('invoiceid');
 
             $products = $request->input('products');
             $qty = $request->input('qty');
@@ -323,30 +321,13 @@ class InvoiceController extends Controller {
                         ->header('Content-Type', 'application/pdf');
     }
 
-    
-    
     public function getsih($code) {
-        
-        $stocks = DB::table('tblm_productdetail')->where('Pro_RetailPrice','LIKE','%'.$code.'%')->orwhere('Pro_Code','LIKE','%'.$code.'%')->distinct()->get();
-        echo '<select> <option disabled selected>Dropdown to Select</option>';      
-        foreach ($stocks as $stt)
-        {
-            $var1= ''.$stt->Pro_Code.' - '.$stt->Pro_RetailPrice;
-            
-            echo '<option>'.$var1.'</option>';
-            
-        }
-        echo '</select>';
-        
-        
-        
-        /*if ($stocks == 0) {
-            $st = ''.$stocks.'-'.$stocks1.'-'.$stocks2;
-            echo $st;
+        $stocks = DB::table('tblm_productdetail')->where('Pro_Code', $code)->value('Pro_Stock');
+        if ($stocks == 0) {
+            return 'SOLD OUT!!!';
         } else {
-            $st = ''.$stocks.'-'.$stocks1.'-'.$stocks2;
-            echo $st;
-        }*/
+            return $stocks;
+        }
     }
 
 }

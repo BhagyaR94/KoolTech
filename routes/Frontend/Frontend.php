@@ -17,6 +17,7 @@ Route::post('clearinvoice', 'Invoices\InvoiceController@drop_records');
 Route::post('saveinvoice', 'Invoices\InvoiceController@save_records');
 
 Route::get('getsih/{code}', 'Invoices\InvoiceController@getsih');
+
 Route::get('printin', 'Invoices\InvoiceController@print_invoice');
 //end of invoice routes
 

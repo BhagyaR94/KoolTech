@@ -11,10 +11,6 @@
 </script>
 
 
-<div class="row-fluid">
-    <h2>Invoices</h2>
-</div>
-
 
 <!-- New Invoice Starts Here-->
 
@@ -23,7 +19,7 @@
 
         <div class="col-md-2">
             <h3 class="box-title"> New Invoice </h3>
-            <h4>{{\Carbon\Carbon::now('Asia/Colombo')}}</h4>
+            <h5>{{\Carbon\Carbon::now('Asia/Colombo')}}</h5>
         </div>
 
 
@@ -92,10 +88,6 @@
             </div>
         </div>
 
-
-
-
-
         <!-- End Of Bill Display -->
 
         <div class="row-fluid">
@@ -103,36 +95,93 @@
 
                 <div class="form-group">
 
+                    {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-2']) !!}
+                    <div class="col-md-1">
+                        {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onchange'=>'paycs()','autofocus'])!!}
+                    </div>
+
+                    {!! Form::label ('invoiceno_lbl','Credit:',['class' =>'control-label col-md-2']) !!}
+                    <div class="col-md-1">
+                        {!!Form::radio('PayType', 'CR', false,['class'=>'radio','onchange'=>'paycr()'])!!}
+                    </div>
+
+                </div>
+
+                <div class="form-group">
                     {!! Form::label ('invoiceno_lbl','Invoice No.:',['class' =>'control-label col-md-4']) !!}
                     <div class="col-md-4">
-                        {!! Form::number ('invoiceid','',['class'=>'form-control', 'placeholder'=>'Invoice Number']) !!}
+                        {!! Form::number ('invoiceid','',['class'=>'form-control', 'placeholder'=>'Invoice No.','style'=>'width:4em;','id'=>'invoiceid']) !!}
                     </div>
                 </div>
 
                 <div class="form-group">
                     {!! Form::label ('product_lbl','Product:',['class' =>'control-label ']) !!}
 
+                    {!! Form::text('products','',['class'=>'form-control', 'placeholder'=>'Search', 'onkeyup'=>"showHint(this.value)",'size'=>'5' ,'id'=>'products1']) !!}
+                    <select class="form-control" id="sih" onchange="selectProduct(this.value)">
 
-                    <select  name="products" onchange="showHint(this.value)" class="form-control">
-                        <option disabled selected value>-- PLEASE SELECT A PRODUCT --</option>
-                        @foreach($products as $product)
-                        <option value={{$product->Pro_Code}}>{{$product->Pro_Code}} - {{$product->Pro_Description}}</option>
-                        @endforeach
                     </select>
+
+
+                    <script>
+
+                        function selectProduct(code)
+                        {
+                            var code1 = code.split(" ");
+                            document.getElementById('products1').value = code1[0];
+                            document.getElementById('sih').disabled = true;
+                            
+                            var stockval = document.forms["myform"]["sihand"].value;
+                            
+
+                        }
+                    </script>
+
                 </div>
 
                 <div class="form-group">
 
                     {!! Form::label ('invoiceno_lbl','SIH:',['class' =>'control-label col-md-3']) !!}
                     <div class="col-md-4">
-                        {!! Form::label ('sih','',['class' =>'control-label col-md-4 text-green','id'=>'sih']) !!}
+                        {!! Form::label ('sih','',['class' =>'control-label col-md-4 text-green','id'=>'sihand']) !!}
                     </div>
+                    
                 </div>
 
+                <div class="form-group">
+                    {!! Form::label ('qty_lbl','Qty:',['class' =>'control-label']) !!}
+
+                    {!! Form::number ('qty','',['class'=>'form-control', 'placeholder'=>'Quantity','style'=>'width:5em;']) !!}
+
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label ('bil_dis_lbl','Dis %:',['class' =>'control-label']) !!}
+
+                    {!! Form::text ('dis_per','',['class'=>'form-control','placeholder'=>'Discount Percentage','style'=>'width:5em;']) !!}
+
+                </div>
+
+
+
                 <script>
+
+                    function paycr()
+                    {
+                        var cr = "{!!$invoice_cr->Inv_No!!}";
+                        var cr1 = parseInt(cr);
+                        document.getElementById("invoiceid").value = cr1 + 1;
+                    }
+
+                    function paycs()
+                    {
+                        var cs = "{!!$invoice_cs->Inv_No!!}";
+                        var cs1 = parseInt(cs);
+                        document.getElementById("invoiceid").value = cs1 + 1;
+                    }
+
                     function checkStock()
                     {
-
                         var stockval = document.forms["myform"]["sih"].value;
                         alert(stockval);
                     }
@@ -140,30 +189,6 @@
 
             </div>
 
-        </div>
-
-        <hr>
-
-        <div class="row-fluid">
-            <center><div class="form-inline">
-
-
-                    <div class="form-group">
-                        {!! Form::label ('qty_lbl','Qty:',['class' =>'control-label']) !!}
-
-                        {!! Form::number ('qty','',['class'=>'form-control', 'placeholder'=>'Quantity']) !!}
-
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label ('bil_dis_lbl','Dis %:',['class' =>'control-label']) !!}
-
-                        {!! Form::text ('dis_per','',['class'=>'form-control','placeholder'=>'Discount Percentage']) !!}
-
-                    </div>
-
-
-                </div></center>
         </div>
 
         <hr>
@@ -190,6 +215,7 @@
 
             </div>
         </div>
+
         <hr>
 
 
@@ -316,23 +342,7 @@
                         <div class="row-fluid">
                             <div class="col-md-4">
 
-                                <div class="form-inline"   style="border-radius:5px; border-style: groove">
-                                    <h4>Invoice Type</h4>
-                                    <div class="form-group">
-                                        {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-5']) !!}
-                                        <div class="col-md-7">
-                                            {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onclick'=>'disablefunction()'])!!}
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        {!! Form::label ('invoiceno_lbl','Credit:',['class' =>'control-label col-md-6']) !!}
-                                        <div class="col-md-6">
-                                            {!!Form::radio('PayType', 'CR', false,['class'=>'radio','onclick'=>'enablefunction()'])!!}
-                                        </div>
-                                    </div>
-
-                                </div>
                             </div>
 
 
@@ -393,6 +403,9 @@
 
 <script>
     function showHint(str) {
+
+        document.getElementById('sih').disabled = false;
+
         if (str.length == 0) {
             document.getElementById("txtHint").innerHTML = "";
             return;
