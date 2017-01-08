@@ -29,7 +29,7 @@ Route::get('newcustomer', 'Customers\CustomerController@customer');
 
 Route::post('addnewcustomer', 'Customers\CustomerController@addnewcustomer');
 
-Route::get('updatecustomer', 'Customers\CustomerController@pickcustomer');
+Route::get('getcustomer/{code}', 'Customers\CustomerController@getcustomer');
 
 Route::post('upcustomer', 'Customers\CustomerController@updatecustomer');
 //end of customer routes

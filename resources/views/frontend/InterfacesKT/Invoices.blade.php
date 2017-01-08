@@ -94,7 +94,7 @@
             <div class="form-inline">
 
                 <div class="form-group">
-
+                    <input type="hidden" id="qtycheck">
                     {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-2']) !!}
                     <div class="col-md-1">
                         {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onchange'=>'paycs()','autofocus'])!!}
@@ -107,12 +107,7 @@
 
                 </div>
 
-                <div class="form-group">
-                    {!! Form::label ('invoiceno_lbl','Invoice No.:',['class' =>'control-label col-md-4']) !!}
-                    <div class="col-md-4">
-                        {!! Form::number ('invoiceid','',['class'=>'form-control', 'placeholder'=>'Invoice No.','style'=>'width:4em;','id'=>'invoiceid']) !!}
-                    </div>
-                </div>
+                
 
                 <div class="form-group">
                     {!! Form::label ('product_lbl','Product:',['class' =>'control-label ']) !!}
@@ -129,23 +124,11 @@
                         {
                             var code1 = code.split(" ");
                             document.getElementById('products1').value = code1[0];
+                            document.getElementById('qtycheck').value = code1[4];
                             document.getElementById('sih').disabled = true;
-                            
-                            var stockval = document.forms["myform"]["sihand"].value;
-                            
-
                         }
                     </script>
 
-                </div>
-
-                <div class="form-group">
-
-                    {!! Form::label ('invoiceno_lbl','SIH:',['class' =>'control-label col-md-3']) !!}
-                    <div class="col-md-4">
-                        {!! Form::label ('sih','',['class' =>'control-label col-md-4 text-green','id'=>'sihand']) !!}
-                    </div>
-                    
                 </div>
 
                 <div class="form-group">
@@ -162,7 +145,12 @@
 
                 </div>
 
-
+                <div class="form-group">
+                    {!! Form::label ('invoiceno_lbl','Invoice No.:',['class' =>'control-label col-md-4']) !!}
+                    <div class="col-md-4">
+                        {!! Form::number ('invoiceid','',['class'=>'form-control', 'placeholder'=>'Invoice No.','style'=>'width:7em;','id'=>'invoiceid','readonly']) !!}
+                    </div>
+                </div>
 
                 <script>
 
@@ -171,6 +159,7 @@
                         var cr = "{!!$invoice_cr->Inv_No!!}";
                         var cr1 = parseInt(cr);
                         document.getElementById("invoiceid").value = cr1 + 1;
+                        //document.getElementById('invoiceid').disabled = true;
                     }
 
                     function paycs()
@@ -178,6 +167,7 @@
                         var cs = "{!!$invoice_cs->Inv_No!!}";
                         var cs1 = parseInt(cs);
                         document.getElementById("invoiceid").value = cs1 + 1;
+                        //document.getElementById('invoiceid').disabled = true;
                     }
 
                     function checkStock()
@@ -301,9 +291,9 @@
 
                             <div class="col-md-8">
                                 <select  name="Customer_ID" class="form-control">
-                                    <option disabled selected value>-- SELECT A CUSTOMER FOR CREDIT INVOICES --</option>
+                                    <option disabled selected value>-- MUST SELECT A CUSTOMER FOR CREDIT INVOICES --</option>
                                     @foreach($customers as $customer)
-                                    <option value={{$customer->Cus_Code}}>{{$customer->Cus_Code}} - {{$customer->Cus_Name}}</option>
+                                    <option value={{$customer->Cus_Code}}>{{$customer->Cus_Code}} - {{$customer->Cus_Name}} - {{$customer->Cus_CreditLimit}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -322,21 +312,7 @@
                             </div>
 
                         </div>
-                        <script>
-                            function disablefunction()
-                            {
-                                document.getElementById("bank").disabled = true;
-
-                                document.getElementById("chqno").disabled = true;
-                            }
-
-                            function enablefunction()
-                            {
-                                document.getElementById("bank").disabled = false;
-
-                                document.getElementById("chqno").disabled = false;
-                            }
-                        </script>
+                        
 
 
                         <div class="row-fluid">

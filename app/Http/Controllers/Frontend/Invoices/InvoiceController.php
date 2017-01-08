@@ -32,7 +32,7 @@ class InvoiceController extends Controller {
         }
 
 
-        $customers = DB::table('tblm_customer')->select('Cus_Code', 'Cus_Name')->get();
+        $customers = DB::table('tblm_customer')->select('Cus_Code', 'Cus_Name','Cus_CreditLimit')->get();
 
         $products = DB::table('tblm_product')->select('Pro_Code', 'Pro_Description')->get();
 
@@ -54,10 +54,10 @@ class InvoiceController extends Controller {
     public function feed_records(AddInvoice $request) {
 
         if (isset($_POST['Add'])) {
-            $request->only(['invoiceid', 'cid', 'poroducts', 'qty']);
+            $request->only(['invoiceid', 'cid', 'poroducts', 'qty','PayType']);
             $inid=$request->input('invoiceid');
             
-            $id = str_pad($inid, 7,'0',STR_PAD_LEFT);
+            $id = str_pad($inid, 8,'0',STR_PAD_LEFT);
 
             $products = $request->input('products');
             $qty = $request->input('qty');
@@ -69,8 +69,8 @@ class InvoiceController extends Controller {
             $product_price = $product_data->Pro_RetailPrice;
             $product_dis_val = $product_price * ($disper / 100);
             $amount = ($product_price - $product_dis_val) * $qty;
-
-            $temp_invoice = DB::insert('insert into tbl_new_temporary_invoice (Invoice_No, Salesman, Salesman_ID, Product_ID, Price, Dis_Per, Dis_Val, Qty, Bill_Dis_Val, Product_Desc) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$id, $user, $userid, $products, $product_price, $disper, $product_dis_val, $qty, $amount, $product_desc]);
+            $type=$request->input('PayType');
+            $temp_invoice = DB::insert('insert into tbl_new_temporary_invoice (Invoice_No, Salesman, Salesman_ID, Product_ID, Price, Dis_Per, Dis_Val, Qty, Bill_Dis_Val, Product_Desc,PayType) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$id, $user, $userid, $products, $product_price, $disper, $product_dis_val, $qty, $amount, $product_desc,$type]);
             DB::table('tblm_productdetail')->where('Pro_Code',$products)->decrement('Pro_Stock',$qty);
             return redirect('invoices');
         } elseif (isset($_POST['save'])) {
@@ -331,7 +331,7 @@ class InvoiceController extends Controller {
         echo '<select> <option disabled selected>Dropdown to Select</option>';      
         foreach ($stocks as $stt)
         {
-            $var1= ''.$stt->Pro_Code.' - '.$stt->Pro_RetailPrice;
+            $var1= ''.$stt->Pro_Code.' - '.$stt->Pro_RetailPrice.' - '.$stt->Pro_Stock;
             
             echo '<option>'.$var1.'</option>';
             
