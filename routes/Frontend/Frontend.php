@@ -58,6 +58,48 @@ Route::post('reportchequesave', 'ReturnedCheques\ReturnedChequesController@repor
 
 //end of returnedcheques routes
 
+//begin of credit settlement routes
+
+Route::get('creditsettlement','CreditSet\CreditSetController@creditset');
+
+Route::get('getcusname/{code}','CreditSet\CreditSetController@getcusname');
+
+Route::get('getreceiptdata/{code}','CreditSet\CreditSetController@getreceiptdata');
+
+//end of credit settlement routes
+
+
+//begin of goods routes
+Route::get('goodsreceived','Goods\GoodsReceivedController@goodsreceived');
+
+Route::get('getproduct/{code}','Goods\GoodsReceivedController@getproduct');
+
+Route::get('getsupplier/{code}','Goods\GoodsReceivedController@getsupplier');
+
+Route::post('receivegood','Goods\GoodsReceivedController@receivegood');
+
+Route::post('cleareceive','Goods\GoodsReceivedController@cleareceive');
+
+Route::get('savereceived/{code}','Goods\GoodsReceivedController@savereceived');
+
+Route::post('savereceivedgoods','Goods\GoodsReceivedController@savereceivedgoods');
+
+
+
+Route::get('goodsreturn','Goods\GoodsReturnController@goodsreturn');
+
+Route::post('returngood','Goods\GoodsReturnController@returngood');
+
+Route::post('cleareturn','Goods\GoodsReturnController@cleareturn');
+
+Route::get('savereturn/{code}','Goods\GoodsReturnController@savereturn');
+
+Route::post('savereturngoods','Goods\GoodsReturnController@savereturngoods');
+
+
+
+//end of goods routes
+
 /**
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'

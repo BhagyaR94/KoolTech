@@ -112,7 +112,8 @@
                 <div class="form-group">
                     {!! Form::label ('product_lbl','Product:',['class' =>'control-label ']) !!}
 
-                    {!! Form::text('products','',['class'=>'form-control', 'placeholder'=>'Search', 'onkeyup'=>"showHint(this.value)",'size'=>'5' ,'id'=>'products1']) !!}
+                    {!! Form::text('products','',['class'=>'form-control input-sm', 'placeholder'=>'Search', 'onkeyup'=>"showHint(this.value)",'size'=>'5' ,'id'=>'products1']) !!}
+                    
                     <select class="form-control" id="sih" onchange="selectProduct(this.value)">
 
                     </select>
@@ -125,6 +126,7 @@
                             var code1 = code.split(" ");
                             document.getElementById('products1').value = code1[0];
                             document.getElementById('qtycheck').value = code1[4];
+                            document.getElementById('qtycheck').value = code1[6];
                             document.getElementById('sih').disabled = true;
                         }
                     </script>
@@ -134,21 +136,21 @@
                 <div class="form-group">
                     {!! Form::label ('qty_lbl','Qty:',['class' =>'control-label']) !!}
 
-                    {!! Form::number ('qty','',['class'=>'form-control', 'placeholder'=>'Quantity','style'=>'width:5em;']) !!}
+                    {!! Form::number ('qty','',['class'=>'form-control input-sm', 'placeholder'=>'Quantity','style'=>'width:5em;']) !!}
 
                 </div>
 
                 <div class="form-group">
                     {!! Form::label ('bil_dis_lbl','Dis %:',['class' =>'control-label']) !!}
 
-                    {!! Form::text ('dis_per','',['class'=>'form-control','placeholder'=>'Discount Percentage','style'=>'width:5em;']) !!}
+                    {!! Form::text ('dis_per','',['class'=>'form-control input-sm','placeholder'=>'Discount Percentage','style'=>'width:5em;']) !!}
 
                 </div>
 
                 <div class="form-group">
                     {!! Form::label ('invoiceno_lbl','Invoice No.:',['class' =>'control-label col-md-4']) !!}
                     <div class="col-md-4">
-                        {!! Form::number ('invoiceid','',['class'=>'form-control', 'placeholder'=>'Invoice No.','style'=>'width:7em;','id'=>'invoiceid','readonly']) !!}
+                        {!! Form::number ('invoiceid','',['class'=>'form-control input-sm', 'placeholder'=>'Invoice No.','style'=>'width:7em;','id'=>'invoiceid','readonly']) !!}
                     </div>
                 </div>
 
@@ -377,6 +379,8 @@
 </div>
 
 
+{!! Form::label ('bil_dis_lbl','',['class' =>'control-label','id'=>'test1']) !!}
+
 <script>
     function showHint(str) {
 
@@ -391,7 +395,7 @@
             {
                 if (this.readyState == 4 && this.status == 200)
                 {
-                    document.getElementById("sih").innerHTML = this.responseText;
+                    document.getElementById("test1").innerHTML = this.responseText;
                 }
             };
             xmlhttp.open("GET", "getsih/" + str, true);
