@@ -4,7 +4,7 @@ namespace App\Http\Requests\Frontend\Invoices;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveInvoice extends FormRequest
+class CancelInvoice extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class SaveInvoice extends FormRequest
     public function rules()
     {
         return [
-            'InvoiceNo'=>'required',
-            
-            'Customer_ID'=>'required_if:PayType,CR'
+            'Inv_No'=>'required',
+            'Reason'=>'required',
         ];
     }
 }

@@ -19,6 +19,13 @@ Route::post('saveinvoice', 'Invoices\InvoiceController@save_records');
 Route::get('getsih/{code}', 'Invoices\InvoiceController@getsih');
 
 Route::get('printin', 'Invoices\InvoiceController@print_invoice');
+
+Route::get('cancelinvoice', 'Invoices\CancelInvoiceController@cancelinvoice');
+
+Route::get('getinvoice/{code}/{code2}', 'Invoices\CancelInvoiceController@getInvoiceData');
+
+Route::post('cancelinv', 'Invoices\CancelInvoiceController@savecancel');
+
 //end of invoice routes
 
 

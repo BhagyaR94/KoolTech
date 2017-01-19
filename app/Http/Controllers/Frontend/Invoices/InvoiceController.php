@@ -17,6 +17,7 @@ class InvoiceController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function invoices() {
+        
         $temp_inv = DB::table('tbl_new_temporary_invoice')->get();
         $gross = 0;
         $total_dis = 0;
@@ -44,9 +45,6 @@ class InvoiceController extends Controller {
         return view('frontend/InterfacesKT/Invoices', ['customers' => $customers, 'products' => $products, 'temp_inv' => $temp_inv, 'gross' => $gross, 'total_dis' => $total_dis, 'total_disper' => $total_disper, 'net' => $net, 'invoice_cr' => $invoice_cr, 'invoice_cs' => $invoice_cs]);
     }
 
-    /**
-     *
-     */
 
     /**
      * @param Requests\AddInvoice $request
@@ -85,14 +83,15 @@ class InvoiceController extends Controller {
         $pid = $request->input('product_id');
         $qty = $request->input('qty');
         $tmp = $request->input('temp_id');
-        DB::table('tbl_new_temporary_invoice')->where('temp_id', '=', $tmp)->delete();
+        DB::table('tbl_new_temporary_invoice')->where('temp_id',$tmp)->delete();
         DB::table('tblm_productdetail')->where('Pro_Code', $pid)->increment('Pro_Stock', $qty);
         return redirect('invoices');
     }
 
     public function save_records(Requests\Frontend\Invoices\SaveInvoice $request) {
-        $invoiceid = $request->InvoiceNo;
-        $mode = $request->PayType;
+       
+$invoiceid = $request->InvoiceNo;
+        $mode ='';
         $amount = $request->Amount;
         $chq = $request->ChequeNo;
         $bnk = $request->Bank;
@@ -104,6 +103,8 @@ class InvoiceController extends Controller {
         $line = 0;
         $customer = '';
         $inv_det = 0;
+        $vat = $request->VAT;
+        
 
 
         $user = Auth::user()->name;
@@ -115,6 +116,16 @@ class InvoiceController extends Controller {
             $tempid = $temp1->temp_id;
             $gross = ($temp1->Price) * ($temp1->Qty);
             $net = $gross - $temp1->Dis_Val;
+            $mode = $temp1->PayType;
+            if($mode=='CS')
+            {
+                $mode='C';
+            }
+            
+            else if($mode=='CR')
+            {
+                $mode='D';
+            }
             $inv_det = DB::insert('insert into tblt_invoicedetail(Inv_No, Inv_OutCode,Inv_LineNo, Inv_Mode, Inv_Date, Inv_ProCode,Inv_Qty,Inv_RtnQty,Inv_Price,Inv_DisPer,Inv_DisVal,Inv_PromoDisper,Inv_PromoDisval,Inv_GrossAmount,Inv_Amount,Inv_Cost, Inv_SupCode, Inv_Description) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [$temp1->Invoice_No, 1, $line, $mode, \Carbon\Carbon::now('Asia/Colombo'), $temp1->Product_ID, $temp1->Qty, 0, $gross, $temp1->Dis_Per, $temp1->Dis_Val, 0, 0, $net, $net, 0, $userid, $temp1->Product_Desc]);
         }
 
@@ -125,16 +136,15 @@ class InvoiceController extends Controller {
             $total_disper = ($total_dis * 100) / $gross;
             $net = $gross - $total_dis;
         }
+        
         $customername = DB::table('tblm_customer')->where('Cus_Code', $customer)->value('Cus_Name');
-
-
 
         $invoice = DB::insert('insert into tblt_invoice(Inv_No, Inv_OutCode, Inv_Mode, Inv_Date, Inv_Time, Inv_UserCode, Inv_AssCode, Inv_CusCode, Inv_GrossAmount, Inv_BillDiscount,Inv_ItemDiscount,Inv_PromoDiscount,Inv_NetAmount,Inv_CostAmount,Inv_CashGiven,Inv_CurrencyGiven,Inv_CashSale,Inv_CardSale,Inv_ChequeSale,Inv_CurrencySale, Inv_CreditSale,Inv_Change,Inv_DueAmount,Inv_ReturnValue,Inv_ReturnCostValue,Inv_Guide,Inv_GuidePer) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$invoiceid, 1, $mode, \Carbon\Carbon::now(), \Carbon\Carbon::now(), $user, $userid, $customer, $gross, $total_dis, $total_dis, 0, $net, $net, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
         //$invoicepay = DB::insert('insert into tblt_invoicepayments (Inv_No, Inv_OutCode, Inv_LineNo, Inv_Mode, Inv_PayCode, Inv_Date, Inv_PayType, Inv_PayAmount, Inv_BnkCode) values (?,?,?,?,?,?,?,?,?)',[$invoiceid,0,1,$mode,$mode,\Carbon\Carbon::now(),$mode,]);
 
         if ($inv_det == 1) {
-            DB::table('tbl_new_temporary_invoice')->where('Invoice_No', '=', $invoiceid)->delete();
+            DB::table('tbl_new_temporary_invoice')->where('Invoice_No', $invoiceid)->delete();
         }
 
         //Bill Starts Here    
@@ -144,8 +154,16 @@ class InvoiceController extends Controller {
         $fpdf->AddPage();
         $fpdf->SetRightMargin(5);
         $fpdf->SetLeftMargin(5);
+        $fpdf->Image('F:\Out Sourcing\KoolTech\app\Http\Controllers\Frontend\Invoices\KE.jpg',10,10,-150);
+    
+        $fpdf->SetFont('Courier', 'B', 9);
+        $fpdf->Cell(190, 10, 'Date & Time :'. \Carbon\Carbon::now('Asia/Colombo'), 0, 0, 'R');
+        $fpdf->Ln(6);
         $fpdf->SetFont('Courier', 'B', 28);
         $fpdf->Cell(190, 10, 'KOOLTECH ELECTRICALS', 0, 0, 'C');
+        $fpdf->Ln(6);
+        $fpdf->SetFont('Courier', 'B', 9);
+        $fpdf->Cell(190, 10, 'Refrigeration, Air conditioning, Auto air conditioning Electrical Compressed air, Steam', 0, 0, 'C');
         $fpdf->Ln(6);
         $fpdf->SetFont('Courier', 'B', 15);
         $fpdf->Cell(190, 10, 'No.18 B, Cross Street, Kandy', 0, 0, 'C');
@@ -167,13 +185,13 @@ class InvoiceController extends Controller {
         $fpdf->Ln(5);
         //$fpdf->Cell(100, 10, 'Payment Type: ', 0, 1, 'R');
         $fpdf->Cell(100, 10, 'Invoice No: ' . $invoiceid, 0, 0, 'L');
-        $fpdf->Cell(100, 10, 'Salesman: ', 0, 0, 'R');
+        $fpdf->Cell(100, 10, 'Salesman: '.$userid.' : '.$user, 0, 0, 'R');
 
         $fpdf->Ln(5);
 
         $fpdf->Cell(100, 10, 'Date: 2010-10-10', 0, 0, 'L');
         $fpdf->Cell(100, 10, 'Customer: ' . $customername, 0, 0, 'R');
-        $fpdf->Line(0, 58, 210, 58);
+       
         $fpdf->Ln(10);
         $fpdf->Cell(15, 10, 'Count', 0, 0, 'L');
         $fpdf->Cell(40, 10, 'Code', 0, 0, 'L');
@@ -184,6 +202,7 @@ class InvoiceController extends Controller {
         $fpdf->Line(0, 68, 210, 68);
         $count = 0;
         $net = 0;
+        
         foreach ($print_in as $print) {
             $count = $count + 1;
             $net = $net + $print->Inv_Amount;
@@ -198,11 +217,28 @@ class InvoiceController extends Controller {
 
             $fpdf->Cell(50, 10, '' . $print->Inv_Amount, 0, 0, 'L');
             $fpdf->Ln(5);
-            if ($count >= 5) {
-                $fpdf->Line(0, 118, 210, 118);
+            if ($count <= 12 && $vat!=null) {
+                
                 $fpdf->Ln(5);
-                $fpdf->Cell(180, 10, 'Net Amount: ' . $net, 0, 0, 'R');
-                $fpdf->Line(0, 128, 210, 128);
+                $fpdf->Cell(180, 10, 'VAT Percentage: ' .$vat.'%', 0, 0, 'R');
+                $fpdf->Ln(5);
+                $vatam=($net*$vat)/100;
+                $fpdf->Cell(180, 10, 'Calculated VAT: '.number_format($vatam,'2','.',','), 0, 0, 'R');
+                $fpdf->Ln(5);
+                $payble=$net+$vatam;
+                $fpdf->Cell(180, 10, 'Net Amount: '.number_format($payble,'2','.',','), 0, 0, 'R');
+                
+                $fpdf->Output('Invoice.pdf', 'I');
+
+                return response('Hello World', 200)
+                                ->header('Content-Type', 'application/pdf');
+            }
+            
+            if ($count <= 12 && $vat==null) {
+                
+                $fpdf->Ln(5);
+                $fpdf->Cell(180, 10, 'Net Amount: '.number_format($net,'2','.',','), 0, 0, 'R');
+                
                 $fpdf->Output('Invoice.pdf', 'I');
 
                 return response('Hello World', 200)
@@ -214,14 +250,7 @@ class InvoiceController extends Controller {
         //footer end
         //generate receipt pdf
         //$fpdf->Output('Invoice.pdf','D');
-        $fpdf->Line(0, 118, 210, 118);
-        $fpdf->Ln(5);
-        $fpdf->Cell(180, 10, 'Net Amount: ' . $net, 0, 0, 'R');
-        $fpdf->Line(0, 128, 210, 128);
-        $fpdf->Output('Invoice.pdf', 'I');
-
-        return response('Hello World', 200)
-                        ->header('Content-Type', 'application/pdf');
+        
 
         //return redirect('invoices');
     }
@@ -273,6 +302,7 @@ class InvoiceController extends Controller {
         $fpdf->Line(0, 68, 210, 68);
         $count = 0;
         $net = 0;
+        
         foreach ($print_in as $print) {
             $count = $count + 1;
             $net = $net + $print->Inv_Amount;
@@ -288,10 +318,9 @@ class InvoiceController extends Controller {
             $fpdf->Cell(50, 10, '' . $print->Inv_Amount, 0, 0, 'L');
             $fpdf->Ln(5);
             if ($count >= 5) {
-                $fpdf->Line(0, 118, 210, 118);
-                $fpdf->Ln(5);
+                
                 $fpdf->Cell(180, 10, 'Net Amount: ' . $net, 0, 0, 'R');
-                $fpdf->Line(0, 128, 210, 128);
+               
                 $fpdf->Output('Invoice.pdf', 'I');
 
                 return response('Hello World', 200)
@@ -305,33 +334,27 @@ class InvoiceController extends Controller {
         //$fpdf->Output('Invoice.pdf','D');
         $fpdf->Line(0, 118, 210, 118);
         $fpdf->Ln(5);
-        $fpdf->Cell(180, 10, 'Net Amount: ' . $net, 0, 0, 'R');
-        $fpdf->Line(0, 128, 210, 128);
+        
+        $fpdf->Cell(180, 10, 'Net Amount: ' . number_format($net,'2','.',','), 0, 0, 'R');
+        
         $fpdf->Output('Invoice.pdf', 'I');
 
         return response('Hello World', 200)
                         ->header('Content-Type', 'application/pdf');
+        
     }
 
     public function getsih($code) {
 
-        
-       $testq=DB::table('tblm_productdetail')->leftjoin('tblm_product','tblm_productdetail.Pro_Code','=','tblm_product.Pro_Code')->where('Pro_Description', 'LIKE', '%' . $code . '%')->distinct()->get();
-        foreach ($testq as $tests)
-        {
-            
-            echo ''.$tests->Pro_Description.' - '.$tests->Pro_RetailPrice;
-            echo '<br>';
-        }
-        
-        /*$stocks = DB::table('tblm_productdetail')->where('Pro_RetailPrice', 'LIKE', '%' . $code . '%')->orwhere('Pro_Code', 'LIKE', '%' . $code . '%')->distinct()->get();
+        $stocks = DB::table('tblm_productdetail')->where('Pro_RetailPrice', 'LIKE', '%' . $code . '%')->orwhere('Pro_Code', 'LIKE', '%' . $code . '%')->distinct()->get();
         echo '<select> <option disabled selected>Dropdown to Select</option>';
         foreach ($stocks as $stt) {
-            $var1 = '' . $stt->Pro_Code . ' - ' . $stt->Pro_RetailPrice . ' - ' . $stt->Pro_Stock;
-
+            $desc=DB::table('tblm_product')->where('Pro_Code',$stt->Pro_Code)->value('Pro_Description');
+            $var1 = '' . $stt->Pro_Code . ',' . $stt->Pro_RetailPrice . ','.$desc.','.$stt->Pro_Stock;
+            
             echo '<option>' . $var1 . '</option>';
         }
-        echo '</select>';*/
+        echo '</select>';
     }
 
 }

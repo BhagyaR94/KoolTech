@@ -57,7 +57,6 @@
         <!-- Bill Dislplay here -->
 
         <div class="row-fluid">
-            <h3 class="text-green">Total Unsaved Invoice Values</h3>
 
             <div class="col-md-3">
                 <div class="form-group">
@@ -91,126 +90,141 @@
         <!-- End Of Bill Display -->
 
         <div class="row-fluid">
-            <div class="form-inline">
 
+            <div class="row">
                 <div class="form-group">
-                    <input type="hidden" id="qtycheck">
-                    {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-2']) !!}
-                    <div class="col-md-1">
-                        {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onchange'=>'paycs()','autofocus'])!!}
-                    </div>
-
-                    {!! Form::label ('invoiceno_lbl','Credit:',['class' =>'control-label col-md-2']) !!}
-                    <div class="col-md-1">
-                        {!!Form::radio('PayType', 'CR', false,['class'=>'radio','onchange'=>'paycr()'])!!}
-                    </div>
-
-                </div>
-
-                
-
-                <div class="form-group">
-                    {!! Form::label ('product_lbl','Product:',['class' =>'control-label ']) !!}
-
-                    {!! Form::text('products','',['class'=>'form-control input-sm', 'placeholder'=>'Search', 'onkeyup'=>"showHint(this.value)",'size'=>'5' ,'id'=>'products1']) !!}
-                    
-                    <select class="form-control" id="sih" onchange="selectProduct(this.value)">
-
-                    </select>
-
-
-                    <script>
-
-                        function selectProduct(code)
-                        {
-                            var code1 = code.split(" ");
-                            document.getElementById('products1').value = code1[0];
-                            document.getElementById('qtycheck').value = code1[4];
-                            document.getElementById('qtycheck').value = code1[6];
-                            document.getElementById('sih').disabled = true;
-                        }
-                    </script>
-
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label ('qty_lbl','Qty:',['class' =>'control-label']) !!}
-
-                    {!! Form::number ('qty','',['class'=>'form-control input-sm', 'placeholder'=>'Quantity','style'=>'width:5em;']) !!}
-
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label ('bil_dis_lbl','Dis %:',['class' =>'control-label']) !!}
-
-                    {!! Form::text ('dis_per','',['class'=>'form-control input-sm','placeholder'=>'Discount Percentage','style'=>'width:5em;']) !!}
-
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label ('invoiceno_lbl','Invoice No.:',['class' =>'control-label col-md-4']) !!}
+                    {!! Form::label ('last_invoiceno_lbl','Last Credit Invoice:',['class' =>'control-label col-md-2']) !!}
                     <div class="col-md-4">
-                        {!! Form::number ('invoiceid','',['class'=>'form-control input-sm', 'placeholder'=>'Invoice No.','style'=>'width:7em;','id'=>'invoiceid','readonly']) !!}
-                    </div>
-                </div>
-
-                <script>
-
-                    function paycr()
-                    {
-                        var cr = "{!!$invoice_cr->Inv_No!!}";
-                        var cr1 = parseInt(cr);
-                        document.getElementById("invoiceid").value = cr1 + 1;
-                        //document.getElementById('invoiceid').disabled = true;
-                    }
-
-                    function paycs()
-                    {
-                        var cs = "{!!$invoice_cs->Inv_No!!}";
-                        var cs1 = parseInt(cs);
-                        document.getElementById("invoiceid").value = cs1 + 1;
-                        //document.getElementById('invoiceid').disabled = true;
-                    }
-
-                    function checkStock()
-                    {
-                        var stockval = document.forms["myform"]["sih"].value;
-                        alert(stockval);
-                    }
-                </script>
-
-            </div>
-
-        </div>
-
-        <hr>
-
-
-        <div class="row-fluid">
-            <div class="form-inline">
-
-                <div class="form-group">
-                    {!! Form::label ('last_invoiceno_lbl','Last Credit Invoice:',['class' =>'control-label col-md-6']) !!}
-                    <div class="col-md-6">
                         <label class="control-label text-danger h4">CR{!!$invoice_cr->Inv_No!!}</label>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label ('last_bal_lbl','Last Cash Invoice',['class' =>'control-label col-md-6']) !!}
-                    <div class="col-md-6">
+                    
+                     {!! Form::label ('last_bal_lbl','Last Cash Invoice',['class' =>'control-label col-md-2']) !!}
+                    <div class="col-md-4">
                         <label class="control-label text-danger h4">CS{!!$invoice_cs->Inv_No!!}</label>
                     </div>
                 </div>
 
 
-
             </div>
         </div>
+        <script>
 
-        <hr>
+            function selectProduct(code)
+            {
+                var code1 = code.split(",");
 
+                if (code1[3] == 0)
+                {
+                    alert("Product is Sold out!");
+                    document.getElementById('products1').value = "";
+                }
 
+                else if (code1[3] > 0)
+                {
+                    document.getElementById('products1').value = code1[0];
+                    document.getElementById('sih').disabled = true;
+                }
+            }
+        </script>
+
+        <script>
+
+            function paycr()
+            {
+                var cr = "{!!$invoice_cr->Inv_No!!}";
+                var cr1 = parseInt(cr);
+                document.getElementById("invoiceid").value = cr1 + 1;
+                //document.getElementById('invoiceid').disabled = true;
+            }
+
+            function paycs()
+            {
+                var cs = "{!!$invoice_cs->Inv_No!!}";
+                var cs1 = parseInt(cs);
+                document.getElementById("invoiceid").value = cs1 + 1;
+                //document.getElementById('invoiceid').disabled = true;
+            }
+
+            function checkStock()
+            {
+                var stockval = document.forms["myform"]["sih"].value;
+                alert(stockval);
+            }
+        </script>
+
+        <script>
+
+            function paycr()
+            {
+                var cr = "{!!$invoice_cr->Inv_No!!}";
+                var cr1 = parseInt(cr);
+                document.getElementById("invoiceid").value = cr1 + 1;
+                //document.getElementById('invoiceid').disabled = true;
+            }
+
+            function paycs()
+            {
+                var cs = "{!!$invoice_cs->Inv_No!!}";
+                var cs1 = parseInt(cs);
+                document.getElementById("invoiceid").value = cs1 + 1;
+                //document.getElementById('invoiceid').disabled = true;
+            }
+
+            function checkStock()
+            {
+                var stockval = document.forms["myform"]["sih"].value;
+                alert(stockval);
+            }
+        </script>
+
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Dis%</th>
+                    <th>Inv_No</th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td>
+                    <div class="form-group">
+                    <input type="hidden" id="qtycheck">
+                    {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-2']) !!}
+                    <div class="col-md-2">
+                        {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onchange'=>'paycs()','autofocus','active'])!!}
+                    </div>
+
+                    {!! Form::label ('invoiceno_lbl','Credit:',['class' =>'control-label col-md-2']) !!}
+                    <div class="col-md-2">
+                        {!!Form::radio('PayType', 'CR', false,['class'=>'radio','onchange'=>'paycr()'])!!}
+                    </div>
+
+                </div>
+                </td>
+                
+                <td>{!! Form::text('products','',['class'=>'form-control input-sm', 'placeholder'=>'Search', 'onkeyup'=>"showHint(this.value)",'size'=>'5' ,'id'=>'products1']) !!}
+
+                    <select class="form-control" id="sih" onchange="selectProduct(this.value)">
+
+                    </select>
+                </td>
+
+                <td>
+                    {!! Form::number ('qty','',['class'=>'form-control input-sm', 'placeholder'=>'Quantity','style'=>'width:5em;']) !!}
+                </td>
+
+                <td>
+                    {!! Form::text ('dis_per','',['class'=>'form-control input-sm','placeholder'=>'Discount Percentage','style'=>'width:5em;']) !!}
+                </td>
+
+                <td>
+                    {!! Form::number ('invoiceid','',['class'=>'form-control input-sm', 'placeholder'=>'Invoice No.','style'=>'width:7em;','id'=>'invoiceid','readonly']) !!}
+                </td>
+            </tr>
+        </table>
 
 
         {!! Form::close() !!}       
@@ -223,7 +237,6 @@
                 <th>Product</th>
                 <th>Description</th>
                 <th>Invoice No.</th>
-
                 <th>Qty</th>
                 <th>Unit Price</th>
                 <th>Dis %</th>
@@ -314,13 +327,15 @@
                             </div>
 
                         </div>
-                        
+
 
 
                         <div class="row-fluid">
                             <div class="col-md-4">
-
-
+                                {!! Form::label ('invoiceno_lbl','Generate VAT Bill',['class' =>'control-label col-md-4']) !!}
+                                <div class="col-md-4">
+                                    {!!Form::checkbox('VAT',15, false,['class'=>'checkbox'])!!}
+                                </div>
                             </div>
 
 
@@ -378,14 +393,10 @@
     </div>
 </div>
 
-
-{!! Form::label ('bil_dis_lbl','',['class' =>'control-label','id'=>'test1']) !!}
-
 <script>
     function showHint(str) {
 
         document.getElementById('sih').disabled = false;
-
         if (str.length == 0) {
             document.getElementById("txtHint").innerHTML = "";
             return;
@@ -395,7 +406,7 @@
             {
                 if (this.readyState == 4 && this.status == 200)
                 {
-                    document.getElementById("test1").innerHTML = this.responseText;
+                    document.getElementById("sih").innerHTML = this.responseText;
                 }
             };
             xmlhttp.open("GET", "getsih/" + str, true);
