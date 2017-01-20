@@ -17,10 +17,11 @@ class ReceiptController extends Controller
 
         $products = DB::table('tblm_product')->select('Pro_Code','Pro_Description')->get();
 
-        $invoice_detail=DB::table('tblt_invoice')->select('Inv_No','Inv_NetAmount')->orderby('Inv_No','DESC')->first();
-
+        //$invoice_detail=DB::table('tblt_invoice')->select('Inv_No','Inv_NetAmount')->orderby('Inv_No','DESC')->first();
+        
+        $rcp_no=DB::table('tbla_receipts')->select('Rcp_No')->orderby('Rcp_No','DESC')->first();
        
-        return view('Frontend/InterfacesKT/Receipts/Receipts',['customers'=>$customers,'products'=>$products,'invoice_detail'=>$invoice_detail]);
+        return view('Frontend/InterfacesKT/Receipts/Receipts',['customers'=>$customers,'products'=>$products,'rcp_no'=>$rcp_no]);
     }
     
     public function savereceipt(Receipts\SaveReceipt $request,FPDF $fpdf)

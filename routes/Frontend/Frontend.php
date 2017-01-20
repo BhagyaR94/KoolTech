@@ -26,6 +26,10 @@ Route::get('getinvoice/{code}/{code2}', 'Invoices\CancelInvoiceController@getInv
 
 Route::post('cancelinv', 'Invoices\CancelInvoiceController@savecancel');
 
+Route::get('invsummery', 'Invoices\InvoiceSummeryController@invoicesum');
+
+Route::post('getinvoicedata', 'Invoices\InvoiceSummeryController@getInvoiceData');
+
 //end of invoice routes
 
 
@@ -106,6 +110,11 @@ Route::post('savereturngoods','Goods\GoodsReturnController@savereturngoods');
 
 
 //end of goods routes
+
+//begin fo sales routes
+Route::get('salesman','Sales\SalesmanController@getSalesmanData');
+Route::post('getsales','Sales\SalesmanController@getSales');
+//end of sales routes
 
 /**
  * These frontend controllers require the user to be logged in

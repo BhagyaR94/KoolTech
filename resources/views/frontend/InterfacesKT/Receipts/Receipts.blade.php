@@ -56,158 +56,46 @@
         </div><!-- /.box-header -->
         <div class="box-body">
             
-            
-
-            <div class="row-fluid">
-                <div class="form-inline">
-
-                    <div class="form-group">
-
-                        {!! Form::label ('invoiceno_lbl','Receipt No.:',['class' =>'control-label col-md-3']) !!}
-
-                        {!! Form::number ('ReceiptNo','',['class'=>'form-control col-md-7', 'placeholder'=>'Receipt Number']) !!}
-
-                    </div>
-
-                    <div class="form-group">
-
-                        {!! Form::label ('invoiceno_lbl','Select Customer:',['class' =>'control-label col-md-4']) !!}
-
-                        <div class="col-md-6">
+          
+            <table class="table table-borderless table-responsive">
+                <thead>
+                    <tr>
+                        <th>Receipt No.</th>
+                        <th>Payable Amount</th>
+                        <th>Cheque Amount</th>
+                        <th>Cheque Date</th>
+                        <th>Customer</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            {!! Form::number ('qty','',['class'=>'form-control input-sm', 'placeholder'=>'Receipt No','readonly','id'=>'rcp']) !!}
+                        </td>
+                        
+                        <td>
+                            {!! Form::number ('qty','',['class'=>'form-control input-sm', 'placeholder'=>'Payable Amount','autofocus','onkeyup'=>'setRcpNo()']) !!}
+                        </td>
+                        
+                        <td>
+                            {!! Form::number ('qty','',['class'=>'form-control input-sm', 'placeholder'=>'Cheque Amount']) !!}
+                        </td>
+                        
+                        <td>
+                            {!! Form::date ('qty','',['class'=>'form-control input-sm', 'placeholder'=>'Cheque Realize Date']) !!}
+                        </td>
+                        
+                        <td>
                             <select  name="CustomerID" class="form-control">
                                 @foreach($customers as $customer)
                                     <option value={{$customer->Cus_Code}}>{{$customer->Cus_Code}} - {{$customer->Cus_Name}}</option>
                                 @endforeach
                             </select>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <hr>
-            <script>
-                function disablefunction()
-                {
-                    document.getElementById("bank").disabled=true;
-                    document.getElementById("accno").disabled=true;
-                    document.getElementById("chqno").disabled=true;
-                }
-                
-                function enablefunction()
-                {
-                    document.getElementById("bank").disabled=false;
-                    document.getElementById("accno").disabled=false;
-                    document.getElementById("chqno").disabled=false;
-                }
-                </script>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-inline"   style="border-radius:5px; border-style: groove">
-                <h4>Payment Type</h4>
-                <div class="form-group">
-                {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-5']) !!}
-                <div class="col-md-7">
-                    {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onclick'=>'disablefunction()'])!!}
-                </div>
-            </div>
-                
-                <div class="form-group">
-                 {!! Form::label ('invoiceno_lbl','Cheque:',['class' =>'control-label col-md-6']) !!}
-                <div class="col-md-6">
-                    {!!Form::radio('PayType', 'CH', false,['class'=>'radio','onclick'=>'enablefunction()'])!!}
-                </div>
-            </div>
-
-            </div>
-                </div>
-                <div class="col-md-8" >
-                    <div class="form-inline" style="border-radius:5px; border-style: groove">
-                <h4>Receipt Type</h4>
-                <div class="form-group">
-                {!! Form::label ('invoiceno_lbl','Advance Payment:',['class' =>'control-label col-md-7']) !!}
-                <div class="col-md-1">
-                    {!!Form::radio('RecType', 'ADV', true,['class'=>'radio'])!!}
-                </div>
-            </div>
-                
-                <div class="form-group">
-                 {!! Form::label ('invoiceno_lbl','Credit Settlement:',['class' =>'control-label col-md-6']) !!}
-                <div class="col-md-1">
-                    {!!Form::radio('RecType', 'SET', false,['class'=>'radio'])!!}
-                </div>
-            </div>
-                
-                <div class="form-group">
-                 {!! Form::label ('invoiceno_lbl','Other:',['class' =>'control-label col-md-6']) !!}
-                <div class="col-md-1">
-                    {!!Form::radio('RecType', 'OTH', false,['class'=>'radio'])!!}
-                </div>
-            </div>
-
-            </div>
-                     
-                </div>
-                
-            </div>
-            <hr>
-            
-            
-            
-           
-
-            <div class="form-horizontal">
-
-                    <div class="form-group">
-                        {!! Form::label ('product_lbl','Bank:',['class' =>'control-label col-md-2']) !!}
-                        <div class="col-md-4">
-                        {!! Form::text ('Bank','',['class'=>'form-control', 'placeholder'=>'BNK' , 'id'=>'bank']) !!}
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        {!! Form::label ('AccNO','Account Number',['class' =>'control-label col-md-2']) !!}
-                         <div class="col-md-4">
-                        {!! Form::text ('AccountNo','',['class'=>'form-control', 'placeholder'=>'Account Number','id'=>'accno']) !!}
-                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label ('chk','Cheque No.',['class' =>'control-label col-md-2']) !!}
-                         <div class="col-md-4">
-                        {!! Form::text ('ChequeNo','',['class'=>'form-control','placeholder'=>'Cheque Number','id'=>'chqno']) !!}
-                         </div>
+                        </td>
                         
-                    </div>
-                
-                    <div class="form-group">
-                        {!! Form::label ('chk','Realize Date',['class' =>'control-label col-md-2']) !!}
-                         <div class="col-md-4">
-                        {!! Form::date ('RealizeDate','',['class'=>'form-control','placeholder'=>'Realize Date']) !!}
-                         </div>
-                    </div>
-                
-                <div class="form-group">
-                        {!! Form::label ('amnt','Amount',['class' =>'control-label col-md-2']) !!}
-                         <div class="col-md-4">
-                        {!! Form::text ('Amount','',['class'=>'form-control','placeholder'=>'Amount']) !!}
-                         </div>
-                    </div>
-
-
-            </div>
-
-            <hr>
-            <div class="row-fluid">
-                <div class="form-group">
-                {!! Form::label ('invoiceno_lbl','Remarks:',['class' =>'control-label col-md-1']) !!}
-                <div class="col-md-8">
-                    {!!Form::text('Remarks','',['class'=>'form-control','placeholder'=>'Remarks'])!!}
-                </div>
-            </div>
-            </div>
+                    </tr>
+                </thead>
+            </table>
+            
 
             {!! Form::close() !!}       
 
@@ -257,7 +145,15 @@
     <!-- Cancel Invoice Ends Here-->
     
     
-    
+    <script>
+        function setRcpNo()
+        {
+            var rcpno="{!!$rcp_no->Rcp_No!!}";
+            var rcpno1=parseInt(rcpno)+1;
+            
+            document.getElementById("rcp").value=rcpno1;
+        }
+        </script>
     
     
     
