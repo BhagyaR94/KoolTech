@@ -116,6 +116,14 @@ Route::get('salesman','Sales\SalesmanController@getSalesmanData');
 Route::post('getsales','Sales\SalesmanController@getSales');
 //end of sales routes
 
+//begin of stock routes
+
+Route::get('qstockadj','Stocks\QuickStockAdjController@index');
+
+Route::get('genpo','Stocks\GeneratePOController@index');
+
+//end of stocks routes
+
 /**
  * These frontend controllers require the user to be logged in
  * All route names are prefixed with 'frontend.'
