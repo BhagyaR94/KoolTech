@@ -320,7 +320,7 @@
                             <div class="col-md-9">
                                 <select class="form-control" name="InvoiceNo" id="saves">
                                     @foreach($temp_inv as $temp_invs)
-                                    <option value="{{$temp_invs->Invoice_No}}">Invoice No: {{$temp_invs->Invoice_No}}</option>
+                                    <option value="{{$temp_invs->Invoice_No}}">Invoice No: {{$temp_invs->Invoice_No}} Net Amount : {{number_format($net,2,'.',',')}} </option>
                                     @endforeach
                                 </select>
                                 <hr>
@@ -412,6 +412,11 @@
             xmlhttp.open("GET", "getsih/" + str, true);
             xmlhttp.send();
         }
+    }
+    
+    function checkcredit(crd)
+    {
+        alert(crd);
     }
 </script>
 

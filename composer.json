@@ -16,7 +16,8 @@
         "arcanedev/no-captcha": "~3.0",
         "yajra/laravel-datatables-oracle": "~6.0",
         "codedge/laravel-fpdf": "^1.0",
-        "niklasravnsborg/laravel-pdf": "^1.1"
+        "niklasravnsborg/laravel-pdf": "^1.1",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
