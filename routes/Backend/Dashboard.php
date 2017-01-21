@@ -5,5 +5,4 @@
  */
 Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
-Route::get('invoices', 'Invoices\InvoiceController@invoice');
 

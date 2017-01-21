@@ -37,70 +37,38 @@
                 </a>
             </li>
             
-            @permission('manage-users')
-                <li class="{{ Active::pattern('invoices') }} treeview">
+            <li class="{{ Active::pattern('admin/dashboard') }}">
+                <a href="{{'invoices'}}">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Invoices</span>
+                </a>
+            </li>
+           
+            
+            
+                <li class="{{ Active::pattern('admin/dashboard') }} treeview">
                 <a href="#">
                     <i class="fa fa-list"></i>
-                    <span>{{ trans('menus.backend.log-viewer.main') }}</span>
-                    <i class="fa fa-angle-down pull-right"></i>
-                </a>
-                <ul class="treeview-menu {{ Active::pattern('invoices*', 'menu-open') }}" style="display: none; {{ Active::pattern('admin/log-viewer*', 'display: block;') }}">
-                    <li class="{{ Active::pattern('admin/log-viewer') }}">
-                        <a href="{{ route('frontend.user.dashboard') }}">
-                            <i class="fa fa-list"></i>
-                            <span>{{ trans('menus.backend.log-viewer.dashboard') }}</span>
-                        </a>
-                    </li>
-
-                    <li class="{{ Active::pattern('admin/log-viewer/logs') }}">
-                        <a href="{{ route('admin.log-viewer::logs.list') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <span>{{ trans('menus.backend.log-viewer.logs') }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            @endauth
-            
-            <li class="{{ Active::pattern('receipts') }}">
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="fa fa-pencil"></i>
-                    <span>{{ trans('menus.backend.sidebar.dashboard') }}</span>
-                </a>
-            </li>
-            
-            <li class="{{ Active::pattern('customers') }}">
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="fa fa-users"></i>
-                    <span>{{ trans('menus.backend.sidebar.dashboard') }}</span>
-                </a>
-            </li>
-
-
-            @permission('manage-users')
-                <li class="{{ Active::pattern('admin/log-viewer*') }} treeview">
-                <a href="#">
-                    <i class="fa fa-list"></i>
-                    <span>{{ trans('menus.backend.log-viewer.main') }}</span>
+                    <span>Invoices</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu {{ Active::pattern('admin/log-viewer*', 'menu-open') }}" style="display: none; {{ Active::pattern('admin/log-viewer*', 'display: block;') }}">
-                    <li class="{{ Active::pattern('admin/log-viewer') }}">
-                        <a href="{{ route('admin.log-viewer::dashboard') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <span>{{ trans('menus.backend.log-viewer.dashboard') }}</span>
-                        </a>
-                    </li>
+                    <li class="{{ Active::pattern('admin/dashboard') }}">
+                <a href="{{'invoices'}}">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Add Invoics</span>
+                </a>
+            </li>
 
-                    <li class="{{ Active::pattern('admin/log-viewer/logs') }}">
-                        <a href="{{ route('admin.log-viewer::logs.list') }}">
-                            <i class="fa fa-circle-o"></i>
-                            <span>{{ trans('menus.backend.log-viewer.logs') }}</span>
-                        </a>
-                    </li>
+                    <li class="{{ Active::pattern('admin/dashboard') }}">
+                <a href="{{'cancelinvoice'}}">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Cancel Invoices</span>
+                </a>
+            </li>
                 </ul>
             </li>
-            @endauth
+            
 
             <li class="header">{{ trans('menus.backend.sidebar.system') }}</li>
 

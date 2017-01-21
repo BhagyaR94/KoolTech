@@ -43,6 +43,8 @@ Route::post('addnewcustomer', 'Customers\CustomerController@addnewcustomer');
 Route::get('getcustomer/{code}', 'Customers\CustomerController@getcustomer');
 
 Route::post('upcustomer', 'Customers\CustomerController@updatecustomer');
+
+Route::get('debtors','Customers\DebtorsController@index');
 //end of customer routes
 //begin of quotation routes
 Route::get('newquotation', 'Quotations\QuotationController@newquotation');
