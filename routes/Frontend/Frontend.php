@@ -51,13 +51,19 @@ Route::post('addquotation', 'Quotations\QuotationController@addquotation');
 
 Route::post('clearqt', 'Quotations\QuotationController@dropqtitem');
 //end of quotation routes
+
+
 //begin of receipt routes
 Route::get('newreceipt', 'Receipts\ReceiptController@newreceipt');
 
-
-
 Route::post('savereceipt', 'Receipts\ReceiptController@savereceipt');
+
+Route::get('vouchers','Receipts\VoucherController@index');
+
+Route::post('addvoucher','Receipts\VoucherController@addvoucher');
 //end of receipt routes
+//
+//
 //begin of returnedcheques routes
 
 
