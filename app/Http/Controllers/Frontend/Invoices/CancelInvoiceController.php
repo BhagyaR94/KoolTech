@@ -110,9 +110,10 @@ class CancelInvoiceController extends Controller {
                 $st = DB::insert('insert into tblt_cancelledinvoice 
             (Inv_No,Inv_OutCode,Inv_CancelledInvNo,Inv_Mode,Inv_Date,Inv_Time,Inv_UserCode,Inv_AssCode,Inv_CusCode,Inv_GrossAmount,Inv_BillDiscount,Inv_ItemDiscount,Inv_PromoDiscount,Inv_NetAmount,Inv_CostAmount,Inv_CreditSale,Inv_Change,Inv_DueAmount,Inv_ReturnValue,Inv_ReturnCostValue,Inv_Remark,Inv_CancelUserCode,Inv_ChequeSale) 
             values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-                                , [str_pad($c_inno->Inv_No + 1, 8, '0', STR_PAD_LEFT), 1, $no, $mode, \Carbon\Carbon::now('Asia/Colombo'), \Carbon\Carbon::now('Asia/Colombo'), Auth::user()->id, Auth::user()->id, $customer, $gross, 0, $dis, 0, $net, 0, $sale, 0, $net, 0, 0, $remark, Auth::user()->id, 0]);
+                                , [str_pad($c_inno->Inv_No + 1, 8, '0', STR_PAD_LEFT), 1, $no, $checkmode, \Carbon\Carbon::now('Asia/Colombo'), \Carbon\Carbon::now('Asia/Colombo'), Auth::user()->id, Auth::user()->id, $customer, $gross, 0, $dis, 0, $net, 0, $sale, 0, $net, 0, 0, $remark, Auth::user()->id, 0]);
                 
                 DB::table('tblm_customer')->where('Cus_Code',$customer)->increment('Cus_CreditLimit',$net);
+                
                 
             } else if ($checkmode == 'C') {
                 $customer = $result->Inv_CusCode;
@@ -144,6 +145,8 @@ class CancelInvoiceController extends Controller {
             (Inv_No,Inv_OutCode,Inv_LineNo,Inv_Mode,Inv_Date,Inv_ProCode,Inv_Qty,Inv_RtnQty,Inv_Price,Inv_Disper,Inv_Disval,Inv_PromoDisper,Inv_PromoDisval,Inv_GrossAmount,Inv_BillDisper,Inv_Amount,Inv_Cost,Inv_SupCode,Inv_Description) 
             values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
                                 , [str_pad($cindet, 8, '0', STR_PAD_LEFT), 1, $count, $checkmode, \Carbon\Carbon::now('Asia/Colombo'),$detail->Inv_ProCode,$detail->Inv_Qty, 0, $detail->Inv_Price, $detail->Inv_Disper, $detail->Inv_Disval, $detail->Inv_PromoDisper,  $detail->Inv_PromoDisval, $detail->Inv_GrossAmount, $detail->Inv_BillDisper, $detail->Inv_Amount, $detail->Inv_Cost,  $detail->Inv_SupCode, $detail->Inv_Description]);  
+            
+                DB::table('tblm_productdetail')->where('Pro_Code',$detail->Inv_ProCode)->increment('Pro_Stock',$detail->Inv_Qtyt);
             }
             
             else if($checkmode == 'C')
