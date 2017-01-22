@@ -128,13 +128,7 @@ class InvoiceController extends Controller {
         if ($mode == 'D') {
             
             $cus_cr = DB::table('tblm_customer')->where('Cus_Code', $customer)->value('Cus_CreditLimit');
-            
-            if ($net > $cus_cr) {
-             
-                return redirect('invoices');
-            } 
-            
-            else if($net <= $cus_cr){
+
                 $customername = DB::table('tblm_customer')->where('Cus_Code', $customer)->value('Cus_Name');
                 DB::table('tblm_customer')->where('Cus_Code',$customer)->decrement('Cus_CreditLimit',$net);
                 $invoice = DB::insert('insert into tblt_invoice(Inv_No, Inv_OutCode, Inv_Mode, Inv_Date, Inv_Time, Inv_UserCode, Inv_AssCode, Inv_CusCode, Inv_GrossAmount, Inv_BillDiscount,Inv_ItemDiscount,Inv_PromoDiscount,Inv_NetAmount,Inv_CostAmount,Inv_CashGiven,Inv_CurrencyGiven,Inv_CashSale,Inv_CardSale,Inv_ChequeSale,Inv_CurrencySale, Inv_CreditSale,Inv_Change,Inv_DueAmount,Inv_ReturnValue,Inv_ReturnCostValue,Inv_Guide,Inv_GuidePer) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$invoiceid, 1, $mode, \Carbon\Carbon::now(), \Carbon\Carbon::now(), $user, $userid, $customer, $gross, $total_dis, $total_dis, 0, $net, $net, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -153,7 +147,7 @@ class InvoiceController extends Controller {
                 if ($inv_det == 1) {
                     DB::table('tbl_new_temporary_invoice')->where('Invoice_No', $invoiceid)->delete();
                 }
-            }
+            
         }
 
         else if ($mode == 'C') {

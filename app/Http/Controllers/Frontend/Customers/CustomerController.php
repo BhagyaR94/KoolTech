@@ -106,7 +106,7 @@ class CustomerController extends Controller
         
         foreach ($cus as $customer)
         {
-            $formatted_record=''.$customer->Cus_Nic.'-'.$customer->Cus_Name.'-'.$customer->Cus_Address1.'-'.$customer->Cus_Address2.'-'.$customer->Cus_Address3.'-'.$customer->Cus_Telephone.'-'.$customer->Cus_Email.'-'.$customer->Cus_Credit.'-'.$customer->Cus_CreditLimit.'-'.$customer->Cus_Discount.'-'.$customer->Cus_Remark.'-'.$customer->Cus_Active.'-'.$customer->Cus_OverSales;
+            $formatted_record=''.$customer->Cus_Nic.'-'.$customer->Cus_Name.'-'.$customer->Cus_Address1.'-'.$customer->Cus_Address2.'-'.$customer->Cus_Address3.'-'.$customer->Cus_Telephone.'-'.$customer->Cus_Email.'-'.$customer->Cus_Credit.'-'.$customer->Cus_CreditLimit.'-'.$customer->Cus_Discount.'-'.$customer->Cus_Remark.'-'.$customer->Cus_Active.'-'.$customer->Cus_OverSales.'-'.$customer->Cus_Code;
             return $formatted_record;
         }
        

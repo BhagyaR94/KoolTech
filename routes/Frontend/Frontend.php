@@ -30,6 +30,8 @@ Route::get('invsummery', 'Invoices\InvoiceSummeryController@invoicesum');
 
 Route::post('getinvoicedata', 'Invoices\InvoiceSummeryController@getInvoiceData');
 
+Route::get('getcustomer/{code}', 'Customers\CustomerController@getcustomer');
+
 //end of invoice routes
 
 

@@ -26,7 +26,7 @@ class SaveInvoice extends FormRequest
         return [
             'InvoiceNo'=>'required',
             
-            'Customer_ID'=>'required_if:PayType,CR'
+            'Customer_ID'=>'required'
         ];
     }
 }
