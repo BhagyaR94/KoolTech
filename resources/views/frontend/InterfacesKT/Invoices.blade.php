@@ -303,9 +303,9 @@
                     <div class="form-horizontal">
 
                        <div class="form-group">
-                                {!! Form::label ('invoiceno_lbl','TAX(VAT) Customer :',['class' =>'control-label col-md-4']) !!}
+                                {!! Form::label ('invoiceno_lbl','Customer ID:',['class' =>'control-label col-md-4']) !!}
                                 <div class="col-md-8">
-                                    {!!Form::text('Customer_ID','',['class'=>'form-control','placeholder'=>'optional','onkeyup'=>'getcustomer(this.value)'])!!}
+                                    {!!Form::text('Customer_ID','',['class'=>'form-control','placeholder'=>'Customer ID Here','onkeyup'=>'getcustomer(this.value)','autofocus'])!!}
                                 </div>
                             </div>
                         
@@ -450,7 +450,7 @@
      
        var cr = parseInt(crd);
        
-       if(cr<"{{$net}}")
+       if(cr<"{{$net}}".value)
        {
            alert ("Sorry Customer Credit is Not Enough");
            document.getElementById("saveinvoicebtn").disabled=true;

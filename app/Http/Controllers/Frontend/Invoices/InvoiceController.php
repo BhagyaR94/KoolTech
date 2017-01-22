@@ -103,7 +103,7 @@ class InvoiceController extends Controller {
         $customer = $request->Customer_ID;
         $inv_det = 0;
         $vat = $request->VAT;
-        $customername='';
+        $customername = '';
         $user = Auth::user()->name;
         $userid = Auth::user()->id;
 
@@ -114,9 +114,13 @@ class InvoiceController extends Controller {
             $total_disper = ($total_dis * 100) / $gross;
             $net = $gross - $total_dis;
         }
-        
+
+        $vatam = ($net * $vat) / 100;
+        $payble = $net + $vatam;
+        $count = 0;
+
         foreach ($temp_inv as $temp1) {
-            
+
             $mode = $temp1->PayType;
             if ($mode == 'CS') {
                 $mode = 'C';
@@ -126,48 +130,45 @@ class InvoiceController extends Controller {
         }
 
         if ($mode == 'D') {
-            
+
             $cus_cr = DB::table('tblm_customer')->where('Cus_Code', $customer)->value('Cus_CreditLimit');
 
-                $customername = DB::table('tblm_customer')->where('Cus_Code', $customer)->value('Cus_Name');
-                DB::table('tblm_customer')->where('Cus_Code',$customer)->decrement('Cus_CreditLimit',$net);
-                $invoice = DB::insert('insert into tblt_invoice(Inv_No, Inv_OutCode, Inv_Mode, Inv_Date, Inv_Time, Inv_UserCode, Inv_AssCode, Inv_CusCode, Inv_GrossAmount, Inv_BillDiscount,Inv_ItemDiscount,Inv_PromoDiscount,Inv_NetAmount,Inv_CostAmount,Inv_CashGiven,Inv_CurrencyGiven,Inv_CashSale,Inv_CardSale,Inv_ChequeSale,Inv_CurrencySale, Inv_CreditSale,Inv_Change,Inv_DueAmount,Inv_ReturnValue,Inv_ReturnCostValue,Inv_Guide,Inv_GuidePer) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$invoiceid, 1, $mode, \Carbon\Carbon::now(), \Carbon\Carbon::now(), $user, $userid, $customer, $gross, $total_dis, $total_dis, 0, $net, $net, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                
-            foreach ($temp_inv as $temp1) {
-            $line = $line + 1;
-            $tempid = $temp1->temp_id;
-            $gross = ($temp1->Price) * ($temp1->Qty);
-            $net = $gross - $temp1->Dis_Val;
-            $mode = $temp1->PayType;
-            
-            $inv_det = DB::insert('insert into tblt_invoicedetail(Inv_No, Inv_OutCode,Inv_LineNo, Inv_Mode, Inv_Date, Inv_ProCode,Inv_Qty,Inv_RtnQty,Inv_Price,Inv_DisPer,Inv_DisVal,Inv_PromoDisper,Inv_PromoDisval,Inv_GrossAmount,Inv_Amount,Inv_Cost, Inv_SupCode, Inv_Description) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [$temp1->Invoice_No, 1, $line, $mode, \Carbon\Carbon::now('Asia/Colombo'), $temp1->Product_ID, $temp1->Qty, 0, $gross, $temp1->Dis_Per, $temp1->Dis_Val, 0, 0, $net, $net, 0, $userid, $temp1->Product_Desc]);
-        }
-                
-                //$invoicepay = DB::insert('insert into tblt_invoicepayments (Inv_No, Inv_OutCode, Inv_LineNo, Inv_Mode, Inv_PayCode, Inv_Date, Inv_PayType, Inv_PayAmount, Inv_BnkCode) values (?,?,?,?,?,?,?,?,?)',[$invoiceid,0,1,$mode,$mode,\Carbon\Carbon::now(),$mode,]);
-                if ($inv_det == 1) {
-                    DB::table('tbl_new_temporary_invoice')->where('Invoice_No', $invoiceid)->delete();
-                }
-            
-        }
+            $customername = DB::table('tblm_customer')->where('Cus_Code', $customer)->value('Cus_Name');
+            DB::table('tblm_customer')->where('Cus_Code', $customer)->decrement('Cus_CreditLimit', $payble);
+            $invoice = DB::insert('insert into tblt_invoice(Inv_No, Inv_OutCode, Inv_Mode, Inv_Date, Inv_Time, Inv_UserCode, Inv_AssCode, Inv_CusCode, Inv_GrossAmount, Inv_BillDiscount,Inv_ItemDiscount,Inv_PromoDiscount,Inv_NetAmount,Inv_CostAmount,Inv_CashGiven,Inv_CurrencyGiven,Inv_CashSale,Inv_CardSale,Inv_ChequeSale,Inv_CurrencySale, Inv_CreditSale,Inv_Change,Inv_DueAmount,Inv_ReturnValue,Inv_ReturnCostValue,Inv_Guide,Inv_GuidePer) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$invoiceid, 1, $mode, \Carbon\Carbon::now(), \Carbon\Carbon::now(), $user, $userid, $customer, $gross, $total_dis, $total_dis, 0, $payble, $payble, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-        else if ($mode == 'C') {
+            foreach ($temp_inv as $temp1) {
+                $line = $line + 1;
+                $tempid = $temp1->temp_id;
+                $gross = ($temp1->Price) * ($temp1->Qty);
+                $net = $gross - $temp1->Dis_Val;
+                $mode = $temp1->PayType;
+
+                $inv_det = DB::insert('insert into tblt_invoicedetail(Inv_No, Inv_OutCode,Inv_LineNo, Inv_Mode, Inv_Date, Inv_ProCode,Inv_Qty,Inv_RtnQty,Inv_Price,Inv_DisPer,Inv_DisVal,Inv_PromoDisper,Inv_PromoDisval,Inv_GrossAmount,Inv_Amount,Inv_Cost, Inv_SupCode, Inv_Description) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [$temp1->Invoice_No, 1, $line, $mode, \Carbon\Carbon::now('Asia/Colombo'), $temp1->Product_ID, $temp1->Qty, 0, $gross, $temp1->Dis_Per, $temp1->Dis_Val, 0, 0, $net, $net, 0, $userid, $temp1->Product_Desc]);
+            }
+
+            //$invoicepay = DB::insert('insert into tblt_invoicepayments (Inv_No, Inv_OutCode, Inv_LineNo, Inv_Mode, Inv_PayCode, Inv_Date, Inv_PayType, Inv_PayAmount, Inv_BnkCode) values (?,?,?,?,?,?,?,?,?)',[$invoiceid,0,1,$mode,$mode,\Carbon\Carbon::now(),$mode,]);
+            if ($inv_det == 1) {
+                DB::table('tbl_new_temporary_invoice')->where('Invoice_No', $invoiceid)->delete();
+            }
+        } else if ($mode == 'C') {
 
             $invoice = DB::insert('insert into tblt_invoice(Inv_No, Inv_OutCode, Inv_Mode, Inv_Date, Inv_Time, Inv_UserCode, Inv_AssCode, Inv_CusCode, Inv_GrossAmount, Inv_BillDiscount,Inv_ItemDiscount,Inv_PromoDiscount,Inv_NetAmount,Inv_CostAmount,Inv_CashGiven,Inv_CurrencyGiven,Inv_CashSale,Inv_CardSale,Inv_ChequeSale,Inv_CurrencySale, Inv_CreditSale,Inv_Change,Inv_DueAmount,Inv_ReturnValue,Inv_ReturnCostValue,Inv_Guide,Inv_GuidePer) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [$invoiceid, 1, $mode, \Carbon\Carbon::now(), \Carbon\Carbon::now(), $user, $userid, $customer, $gross, $total_dis, $total_dis, 0, $net, $net, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-            
-             foreach ($temp_inv as $temp1) {
-            $line = $line + 1;
-            $tempid = $temp1->temp_id;
-            $gross = ($temp1->Price) * ($temp1->Qty);
-            $net = $gross - $temp1->Dis_Val;
-            $mode = $temp1->PayType;
-            if ($mode == 'CS') {
-                $mode = 'C';
-            } else if ($mode == 'CR') {
-                $mode = 'D';
+
+            foreach ($temp_inv as $temp1) {
+                $line = $line + 1;
+                $tempid = $temp1->temp_id;
+                $gross = ($temp1->Price) * ($temp1->Qty);
+                $net = $gross - $temp1->Dis_Val;
+                $mode = $temp1->PayType;
+                if ($mode == 'CS') {
+                    $mode = 'C';
+                } else if ($mode == 'CR') {
+                    $mode = 'D';
+                }
+                $inv_det = DB::insert('insert into tblt_invoicedetail(Inv_No, Inv_OutCode,Inv_LineNo, Inv_Mode, Inv_Date, Inv_ProCode,Inv_Qty,Inv_RtnQty,Inv_Price,Inv_DisPer,Inv_DisVal,Inv_PromoDisper,Inv_PromoDisval,Inv_GrossAmount,Inv_Amount,Inv_Cost, Inv_SupCode, Inv_Description) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [$temp1->Invoice_No, 1, $line, $mode, \Carbon\Carbon::now('Asia/Colombo'), $temp1->Product_ID, $temp1->Qty, 0, $gross, $temp1->Dis_Per, $temp1->Dis_Val, 0, 0, $net, $net, 0, $userid, $temp1->Product_Desc]);
             }
-            $inv_det = DB::insert('insert into tblt_invoicedetail(Inv_No, Inv_OutCode,Inv_LineNo, Inv_Mode, Inv_Date, Inv_ProCode,Inv_Qty,Inv_RtnQty,Inv_Price,Inv_DisPer,Inv_DisVal,Inv_PromoDisper,Inv_PromoDisval,Inv_GrossAmount,Inv_Amount,Inv_Cost, Inv_SupCode, Inv_Description) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [$temp1->Invoice_No, 1, $line, $mode, \Carbon\Carbon::now('Asia/Colombo'), $temp1->Product_ID, $temp1->Qty, 0, $gross, $temp1->Dis_Per, $temp1->Dis_Val, 0, 0, $net, $net, 0, $userid, $temp1->Product_Desc]);
-        }
-            
+
             //$invoicepay = DB::insert('insert into tblt_invoicepayments (Inv_No, Inv_OutCode, Inv_LineNo, Inv_Mode, Inv_PayCode, Inv_Date, Inv_PayType, Inv_PayAmount, Inv_BnkCode) values (?,?,?,?,?,?,?,?,?)',[$invoiceid,0,1,$mode,$mode,\Carbon\Carbon::now(),$mode,]);
 
             if ($inv_det == 1) {
@@ -202,11 +203,10 @@ class InvoiceController extends Controller {
         $fpdf->Ln(6);
         $fpdf->SetFont('Courier', 'B', 15);
         $fpdf->Cell(190, 10, 'Tel/Fax:081-2228666,Tel:077-3949282', 0, 0, 'C');
-        if($vat!=null)
-        {
+        if ($vat != null) {
             $fpdf->Ln(6);
-        $fpdf->SetFont('Courier', 'B', 15);
-        $fpdf->Cell(190, 10, 'VAT.REG.NO:-', 0, 0, 'C');
+            $fpdf->SetFont('Courier', 'B', 15);
+            $fpdf->Cell(190, 10, 'VAT.REG.NO:-', 0, 0, 'C');
         }
 
         //Receipt Type Name
@@ -227,7 +227,7 @@ class InvoiceController extends Controller {
 
         $fpdf->Ln(5);
 
-        $fpdf->Cell(100, 10, 'Date: '.\Carbon\Carbon::now('Asia/Colombo'), 0, 0, 'L');
+        $fpdf->Cell(100, 10, 'Date: ' . \Carbon\Carbon::now('Asia/Colombo'), 0, 0, 'L');
         $fpdf->Cell(100, 10, 'Customer: ' . $customername, 0, 0, 'R');
         $fpdf->Ln(5);
         $fpdf->Cell(100, 10, 'Customer VAT No: ' . $customername, 0, 0, 'R');
@@ -240,8 +240,6 @@ class InvoiceController extends Controller {
         $fpdf->Cell(20, 10, 'Qty', 0, 0, 'L');
         $fpdf->Cell(50, 10, 'Amount', 0, 1, 'L');
         $fpdf->Line(0, 68, 210, 68);
-        $count = 0;
-        $net = 0;
 
         foreach ($print_in as $print) {
             $count = $count + 1;
@@ -262,10 +260,10 @@ class InvoiceController extends Controller {
                 $fpdf->Ln(5);
                 $fpdf->Cell(180, 10, 'VAT Percentage: ' . $vat . '%', 0, 0, 'R');
                 $fpdf->Ln(5);
-                $vatam = ($net * $vat) / 100;
+
                 $fpdf->Cell(180, 10, 'Calculated VAT: ' . number_format($vatam, '2', '.', ','), 0, 0, 'R');
                 $fpdf->Ln(5);
-                $payble = $net + $vatam;
+
                 $fpdf->Cell(180, 10, 'Net Amount: ' . number_format($payble, '2', '.', ','), 0, 0, 'R');
 
                 $fpdf->Output('Invoice.pdf', 'I');
@@ -292,9 +290,6 @@ class InvoiceController extends Controller {
         //$fpdf->Output('Invoice.pdf','D');
         //return redirect('invoices');
     }
-    
-    
-    
 
     public function print_invoice(FPDF $fpdf) {
 
@@ -311,7 +306,7 @@ class InvoiceController extends Controller {
         $fpdf->Ln(6);
         $fpdf->SetFont('Courier', 'B', 15);
         $fpdf->Cell(190, 10, 'Tel/Fax:081-2228666,Tel:077-3949282', 0, 0, 'C');
-        
+
         //Receipt Type Name
         $fpdf->Ln(5);
         $fpdf->SetFont('Courier', 'B', 24);
