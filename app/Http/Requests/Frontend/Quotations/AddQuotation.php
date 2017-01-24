@@ -24,8 +24,8 @@ class AddQuotation extends FormRequest
     public function rules()
     {
         return [
-            'require'=>'QuotationNo',
-            'require'=>'CustomerID',
+            'QuotationNo'=>'required',
+            'PayType'=>'required',
             'products'=>'required',
             'Quantity'=>'required|integer|min:1',
             'dis_per'=>'required|min:1'

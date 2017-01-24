@@ -24,7 +24,8 @@ class DropQuotationItem extends FormRequest
     public function rules()
     {
         return [
-            'product_id'=>'required'
+            'temp_id'=>'required',
+            'pro_id'=>'required'
         ];
     }
 }

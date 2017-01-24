@@ -117,12 +117,10 @@ Route::get('savereturn/{code}','Goods\GoodsReturnController@savereturn');
 
 Route::post('savereturngoods','Goods\GoodsReturnController@savereturngoods');
 
-
-
 //end of goods routes
 
 //begin fo sales routes
-Route::get('salesman','Sales\SalesmanController@getSalesmanData');
+    Route::get('salesman','Sales\SalesmanController@getSalesmanData');
 Route::post('getsales','Sales\SalesmanController@getSales');
 //end of sales routes
 

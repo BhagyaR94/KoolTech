@@ -97,8 +97,8 @@
                     <div class="col-md-4">
                         <label class="control-label text-danger h4">CR{!!$invoice_cr->Inv_No!!}</label>
                     </div>
-                    
-                     {!! Form::label ('last_bal_lbl','Last Cash Invoice',['class' =>'control-label col-md-2']) !!}
+
+                    {!! Form::label ('last_bal_lbl','Last Cash Invoice',['class' =>'control-label col-md-2']) !!}
                     <div class="col-md-4">
                         <label class="control-label text-danger h4">CS{!!$invoice_cs->Inv_No!!}</label>
                     </div>
@@ -113,7 +113,7 @@
             {
                 var code1 = code.split(",");
 
-                if (code1[3] == 0) 
+                if (code1[3] == 0)
                 {
                     alert("Product is Sold out!");
                     document.getElementById('products1').value = "";
@@ -191,20 +191,20 @@
             <tr>
                 <td>
                     <div class="form-group">
-                    <input type="hidden" id="qtycheck">
-                    {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-2']) !!}
-                    <div class="col-md-2">
-                        {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onchange'=>'paycs()','autofocus','active'])!!}
-                    </div>
+                        <input type="hidden" id="qtycheck">
+                        {!! Form::label ('invoiceno_lbl','Cash:',['class' =>'control-label col-md-2']) !!}
+                        <div class="col-md-2">
+                            {!!Form::radio('PayType', 'CS', false,['class'=>'radio','onchange'=>'paycs()','autofocus','active'])!!}
+                        </div>
 
-                    {!! Form::label ('invoiceno_lbl','Credit:',['class' =>'control-label col-md-2']) !!}
-                    <div class="col-md-2">
-                        {!!Form::radio('PayType', 'CR', false,['class'=>'radio','onchange'=>'paycr()'])!!}
-                    </div>
+                        {!! Form::label ('invoiceno_lbl','Credit:',['class' =>'control-label col-md-2']) !!}
+                        <div class="col-md-2">
+                            {!!Form::radio('PayType', 'CR', false,['class'=>'radio','onchange'=>'paycr()'])!!}
+                        </div>
 
-                </div>
+                    </div>
                 </td>
-                
+
                 <td>{!! Form::text('products','',['class'=>'form-control input-sm', 'placeholder'=>'Search', 'onkeyup'=>"showHint(this.value)",'size'=>'5' ,'id'=>'products1']) !!}
 
                     <select class="form-control" id="sih" onchange="selectProduct(this.value)">
@@ -267,7 +267,7 @@
                 <td><button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
                 </tr>
                 @endforeach
-
+                
                 {!! Form::close() !!}
 
             </table>
@@ -302,26 +302,26 @@
 
                     <div class="form-horizontal">
 
-                       <div class="form-group">
-                                {!! Form::label ('invoiceno_lbl','Customer ID:',['class' =>'control-label col-md-4']) !!}
-                                <div class="col-md-8">
-                                    {!!Form::text('Customer_ID','',['class'=>'form-control','placeholder'=>'Customer ID Here','onkeyup'=>'getcustomer(this.value)','autofocus'])!!}
-                                </div>
-                            </div>
-                        
                         <div class="form-group">
-                                {!! Form::label ('invoiceno_lbl','Customer :',['class' =>'control-label col-md-4']) !!}
-                                <div class="col-md-8">
-                                    {!! Form::label ('cuscus','',['class' =>'control-label col-md-4','id'=>'Cus_ID']) !!}
-                                </div>
+                            {!! Form::label ('invoiceno_lbl','Customer ID:',['class' =>'control-label col-md-4']) !!}
+                            <div class="col-md-8">
+                                {!!Form::text('Customer_ID','',['class'=>'form-control','placeholder'=>'Customer ID Here','onkeyup'=>'getcustomer(this.value)','autofocus'])!!}
                             </div>
-                        
+                        </div>
+
                         <div class="form-group">
-                                {!! Form::label ('invoiceno_lbl','Credit Limit:',['class' =>'control-label col-md-4']) !!}
-                                <div class="col-md-8">
-                                    {!! Form::text ('invoiceno_lbl','',['class' =>'col-md-4','id'=>'CreditLimit','onkeyup'=>"checkcredit(this.value)"]) !!}
-                                </div>
+                            {!! Form::label ('invoiceno_lbl','Customer :',['class' =>'control-label col-md-4']) !!}
+                            <div class="col-md-8">
+                                {!! Form::label ('cuscus','',['class' =>'control-label col-md-4','id'=>'Cus_ID']) !!}
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::label ('invoiceno_lbl','Credit Limit:',['class' =>'control-label col-md-4']) !!}
+                            <div class="col-md-8">
+                                {!! Form::text ('invoiceno_lbl','',['class' =>'col-md-4','id'=>'CreditLimit','onkeyup'=>"checkcredit(this.value)"]) !!}
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             {!! Form::label ('invoiceno_lbl','Please Select An Invoice:',['class' =>'control-label col-md-3']) !!}
@@ -345,10 +345,10 @@
                                     {!!Form::text('VAT','',['class'=>'form-control','placeholder'=>'optional'])!!}
                                 </div>
                             </div>
-                            
-                            
 
-<label id="test1"></label>
+
+
+                            <label id="test1"></label>
                         </div>
                     </div>
 
@@ -423,7 +423,7 @@
             xmlhttp.send();
         }
     }
-    
+
     function getcustomer(str) {
         if (str.length == 0) {
             document.getElementById("txtHint").innerHTML = "";
@@ -435,32 +435,32 @@
                 if (this.readyState == 4 && this.status == 200)
                 {
                     var cusdata = this.responseText.split("-");
-                    document.getElementById("Cus_ID").innerHTML=cusdata[1];
-                    document.getElementById("CreditLimit").value=cusdata[8];
-                    
+                    document.getElementById("Cus_ID").innerHTML = cusdata[1];
+                    document.getElementById("CreditLimit").value = cusdata[8];
+
                 }
             };
             xmlhttp.open("GET", "getcustomer/" + str, true);
             xmlhttp.send();
         }
     }
-    
+
     function checkcredit(crd)
     {
-     
-       var cr = parseInt(crd);
-       
-       if(cr<"{{$net}}".value)
-       {
-           alert ("Sorry Customer Credit is Not Enough");
-           document.getElementById("saveinvoicebtn").disabled=true;
-       }
-       
-       else
-       {
-           document.getElementById("saveinvoicebtn").disabled=false;
-       }
-       
+
+        var cr = parseInt(crd);
+
+        if (cr < "{{$net}}".value)
+        {
+            alert("Sorry Customer Credit is Not Enough");
+            document.getElementById("saveinvoicebtn").disabled = true;
+        }
+
+        else
+        {
+            document.getElementById("saveinvoicebtn").disabled = false;
+        }
+
     }
 </script>
 

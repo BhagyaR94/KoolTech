@@ -70,7 +70,7 @@ class GoodsReceivedController extends Controller {
         //echo $supcode;
         $insert = DB::insert('insert into tblt_goodsreceivedetail (Gr_No,Gr_OutCode,Gr_Date,Gr_ProCode,Gr_Qty,Gr_RtnQty,Gr_Cost,Gr_DisPer,Gr_NewCost,Gr_Amount,Gr_SupCode) values (?,?,?,?,?,?,?,?,?,?,?) ', [$grno, $outcode, \Carbon\Carbon::now('Asia/Colombo'), $procode, $qty, $rtnqty, $cost, $disper, $newcost, $amount, $supcode]);
         //return $insert;
-        return redirect('goodsreturn');
+        return redirect('goodsreceived');
     }
 
     public function cleareceive(Requests\Frontend\Goods\DropGoods $request) {
